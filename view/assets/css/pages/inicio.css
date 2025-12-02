@@ -1,11 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css');
 
-@import url(variaveis.css);
+@import url('../global/variaveis.css');
+@import url('../components/passeio-card.css');
 
 /* Estilos gerais */
 body {
-    font-family: Arial, sans-serif;
+    font-family: var(--fonte, 'Poppins', sans-serif);
     margin: 0;
     padding: 0;
     background: #f5f5f5;
@@ -31,9 +32,30 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.35);
 }
 
+/* Botão de login no canto superior direito */
+.btn-login {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    padding: 12px 28px;
+    background: var(--cor-azul, #32A1CD);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-login:hover {
+    background: #2889b0;
+    transform: scale(1.05);
+}
+
+/* Conteúdo centralizado */
 .hero-content {
     position: relative;
     z-index: 2;
@@ -42,88 +64,13 @@ body {
 .hero-content h1 {
     font-size: 3rem;
     margin-bottom: 10px;
+    font-weight: 700;
+    color: white;
 }
 
 .hero-content p {
     font-size: 1.2rem;
-    margin-bottom: 20px;
-}
-
-.btn-login {
-    padding: 12px 25px;
-    background: #0078ff;
+    margin-bottom: 0;
+    font-weight: 400;
     color: white;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.btn-login:hover {
-    background: #005fcc;
-}
-
-/* LISTA DE PASSEIOS */
-.passeios {
-    background: #f2e5c4;
-    padding: 40px 20px;
-    text-align: center;
-}
-
-.passeios h2 {
-    font-size: 2rem;
-    margin-bottom: 30px;
-}
-
-.lista-passeios {
-    display: flex;
-    justify-content: center;
-    gap: 25px;
-    flex-wrap: wrap;
-}
-
-.passeio-card {
-    background: white;
-    width: 300px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    overflow: hidden;
-    transition: transform 0.3s;
-}
-
-.passeio-card:hover {
-    transform: translateY(-5px);
-}
-
-.passeio-card img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-}
-
-.passeio-card h3 {
-    font-size: 1.4rem;
-    margin: 15px;
-}
-
-.passeio-card p {
-    color: #555;
-    margin: 0 15px 20px;
-    font-size: 0.95rem;
-}
-
-.btn-ver {
-    display: block;
-    background: #00a046;
-    padding: 10px;
-    margin: 0 15px 20px;
-    text-align: center;
-    color: white;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.btn-ver:hover {
-    background: #007f38;
 }

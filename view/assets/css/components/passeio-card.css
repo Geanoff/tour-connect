@@ -1,0 +1,111 @@
+/* ========================================
+   COMPONENTE: Card de Passeio
+   ======================================== */
+
+.passeio-card {
+    background: white;
+    width: 280px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.passeio-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Imagem do Card */
+.passeio-card__imagem {
+    position: relative;
+    overflow: hidden;
+}
+
+.passeio-card__imagem img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.passeio-card:hover .passeio-card__imagem img {
+    transform: scale(1.05);
+}
+
+/* Conteúdo do Card */
+.passeio-card__conteudo {
+    padding: 20px;
+}
+
+.passeio-card__titulo {
+    font-family: var(--fonte, 'Poppins', sans-serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--cor-principal, #3f3557);
+    margin: 0 0 10px 0;
+    line-height: 1.3;
+}
+
+.passeio-card__descricao {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0 0 15px 0;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.passeio-card__preco {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-verde, #51CD32);
+    margin-bottom: 15px;
+}
+
+.passeio-card__btn {
+    display: block;
+    background: var(--cor-verde, #51CD32);
+    padding: 12px 20px;
+    text-align: center;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.passeio-card__btn:hover {
+    background: #45b329;
+    transform: scale(1.02);
+}
+
+/* Container da lista de passeios */
+.lista-passeios {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Seção de passeios */
+.secao-passeios {
+    background: #f2e5c4;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.secao-passeios__titulo {
+    font-family: var(--fonte, 'Poppins', sans-serif);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--cor-principal, #3f3557);
+    margin-bottom: 40px;
+}
+
