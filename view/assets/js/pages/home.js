@@ -1,0 +1,1 @@
+alert('Exemplo JS funcionando!');
