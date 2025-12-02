@@ -21,32 +21,23 @@ function fechar_popup(popupId) {
     fundoPopup.classList.remove('ativo');
 }
 
+
 //EFEITO DO TOAST
-function exibir_toast(tipo, mensagem) {
-    let toastTimeout;
+function abrir_toast(tipo, mensagem) {
     const toast = document.getElementById("toast");
     const icon = document.getElementById("toast-icon");
     const msg = document.getElementById("toast-msg");
 
-    // Cancela qualquer animação anterior
-    clearTimeout(toastTimeout);
-
     // Define classe de cor
     toast.className = "toast " + tipo;
 
-    // Define ícone conforme tipo
+    // Define ícone
     switch (tipo) {
         case "sucesso":
             icon.className = "fa-regular fa-circle-check";
             break;
         case "erro":
             icon.className = "fa-solid fa-triangle-exclamation";
-            break;
-        case "favorito":
-            icon.className = "fa-solid fa-heart";
-            break;
-        case "desfavorito":
-            icon.className = "fa-solid fa-heart-crack";
             break;
         case "info":
             icon.className = "fa-solid fa-circle-info";
@@ -58,13 +49,13 @@ function exibir_toast(tipo, mensagem) {
     // Define mensagem
     msg.textContent = mensagem;
 
-    // Exibe o toast
-    toast.style.right = "0px";
+    // Mostra
+    toast.style.top = "20px";
     toast.style.opacity = "1";
 
-    // Oculta após 3 segundos
-    toastTimeout = setTimeout(() => {
-        toast.style.right = "-300px";
+    // Esconde depois de 3s
+    setTimeout(() => {
+        toast.style.top = "-100px";
         toast.style.opacity = "0";
     }, 3000);
-};
+}
