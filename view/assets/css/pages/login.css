@@ -1,0 +1,29 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+form {
+    min-width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 5px;
+    padding: 30px;
+}
+
+form small {
+    width: 100%;
+    text-align: center;
+}
+
+form small a {
+    color: var(--cor-azul);
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+}

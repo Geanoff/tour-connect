@@ -1,0 +1,26 @@
+.input-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-box label {
+    font-size: 13.5px;
+    font-weight: 500;
+}
+
+.input-box label span {
+    color: var(--cor-vermelho);
+}
+
+.input-box input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 15px;
+    outline: none;
+    transition: .3s;
+}
+
+.input-box input:focus {
+    border-color: var(--cor-azul);
+}

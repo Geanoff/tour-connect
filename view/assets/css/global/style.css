@@ -4,6 +4,7 @@
 @import url(../components/popup.css);
 @import url(../components/toast.css);
 @import url(../components/button.css);
+@import url(../components/input.css);
 
 * {
     margin: 0;

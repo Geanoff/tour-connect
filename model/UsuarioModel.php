@@ -12,16 +12,11 @@ class UsuarioModel
         $this->pdo = $pdo;
     }
 
-    function login($email)
+    function login($email, $senha)
     {
-        $query = "SELECT usuario_id, status, nome, email, senha, doador, ong, adm, i.caminho
-        FROM $this->tabela 
-        LEFT JOIN imagens i USING(imagem_id)
-        WHERE email = :email";
-        $stmt = $this->pdo->prepare($query);
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = $this->pdo->prepare("SELECT * FROM {$this->tabela} WHERE email = :email AND senha = :senha");
+        $stmt->execute(['email' => $email, 'senha' => $senha]);
+        return $stmt->fetch();
     }
 
     function cadastro($dados)
