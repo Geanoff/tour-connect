@@ -3,7 +3,7 @@
 
 <!-- JS Específicos da Página -->
 <?php
-if (isset($jsPagina)) {
+if (!empty($jsPagina)) {
     echo '<script src="../assets/js/pages/' . $jsPagina . '"></script>' . PHP_EOL;
 }
 
