@@ -41,7 +41,7 @@ require_once '../components/layout/base-inicio.php';
             </div>
             <div class="input-box w-[calc(50%-4px)]">
                 <label for="cpf">CPF<span>*</span></label>
-                <input type="text" id="cpf" name="cpf" required>
+                <input data-mask="###.###.###-##" type="text" id="cpf" name="cpf" required>
             </div>
         </div>
         <div class="input-group flex gap-2">
@@ -51,17 +51,17 @@ require_once '../components/layout/base-inicio.php';
             </div>
             <div class="input-box w-[calc(50%-4px)]">
             <label for="telefone">Telefone<span>*</span></label>
-            <input type="text" id="telefone" name="telefone" required>
+            <input data-mask="(##) #####-####" type="text" id="telefone" name="telefone" required>
         </div>
         </div>
         <div class="input-group flex gap-2">
             <div class="input-box w-[calc(50%-4px)]">
                 <label for="senha">Senha<span>*</span></label>
-                <input type="password" id="senha" name="senha" required>
+                <input type="password" id="senha" name="senha" minlength="8" maxlength="20" required>
             </div>
             <div class="input-box w-[calc(50%-4px)]">
                 <label for="c_senha">Confirmar Senha<span>*</span></label>
-                <input type="password" id="c_senha" name="c_senha" required>
+                <input type="password" id="c_senha" name="c_senha" minlength="8" maxlength="20" required>
             </div>
         </div>
         <button class="btn btn-primary">CADASTRAR</button>

@@ -11,7 +11,7 @@ if (!empty($jsPagina)) {
 if (isset($_SESSION['mensagem_toast'])) {
     $tipo = json_encode($_SESSION['mensagem_toast'][0]);
     $mensagem = json_encode($_SESSION['mensagem_toast'][1]);
-    echo "<script>exibir_toast($tipo, $mensagem)</script>";
+    echo "<script>abrir_toast($tipo, $mensagem)</script>";
     unset($_SESSION['mensagem_toast']);
 }
 ?>
