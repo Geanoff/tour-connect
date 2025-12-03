@@ -1,5 +1,6 @@
 <!-- Arquivo JS Principal -->
 <script src="../assets/js/global/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
 <!-- JS Específicos da Página -->
 <?php
