@@ -13,7 +13,7 @@ CREATE TABLE imagens (
 
 -- Criação da tabela passeios
 CREATE TABLE passeios (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    passeio_id INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(255) NOT NULL,
     descricao_curta TEXT NOT NULL,
     descricao TEXT NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE passeios (
 
 -- Criação da tabela guias
 CREATE TABLE guias (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    guia_id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     imagem VARCHAR(255) NOT NULL,
     especialidade VARCHAR(255) NOT NULL,
@@ -45,13 +45,13 @@ CREATE TABLE passeio_guias (
 
 -- Criação da tabela usuários
 CREATE TABLE usuarios (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     cpf CHAR(11) NOT NULL UNIQUE,     
     telefone VARCHAR(20) NOT NULL,    
     senha VARCHAR(255) NOT NULL,      
-    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Tabela de agendamentos
