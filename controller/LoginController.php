@@ -16,8 +16,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     $loginUsuario = $usuarioModel->login($dados);
     if ($loginUsuario) {
-        echo 'Login com Sucesso - mudar no controller a rota!';
-        // header('Location: ../view/pages/home.php');
+        // Salva os dados do usuário na sessão
+        $_SESSION['usuario_id'] = $loginUsuario['id'];
+        $_SESSION['usuario_nome'] = $loginUsuario['nome'];
+        $_SESSION['usuario_email'] = $loginUsuario['email'];
+        $_SESSION['usuario_telefone'] = $loginUsuario['telefone'];
+        
+        // Redireciona para a home do usuário
+        header('Location: ../view/pages/home-usuario.php');
         exit;
     } else {
         // Mensagem de erro
