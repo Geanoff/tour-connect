@@ -10,10 +10,13 @@ form {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;  */
     border-radius: 5px;
     padding: 30px;
+}
+
+form h1 {
+    font-weight: 500;
 }
 
 form small {
@@ -26,4 +29,64 @@ form small a {
     text-decoration: none;
     font-weight: 500;
     cursor: pointer;
+}
+
+/* Flip */
+main {
+    perspective: 2000px;
+}
+
+.flip {
+    transition: .5s linear;
+    transform-origin: left;
+    transform-style: preserve-3d;
+    background-image: linear-gradient(90deg, #32A1CD 0%, #3CC1F6 100%);
+    border-radius: 0 8px 8px 0;
+}
+
+.flip.ativo {
+    transform: rotateY(-180deg);
+    /* width: 60%; */
+    left: 40%;
+    width: 400px;
+}
+
+.front,
+.back {
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.back {
+    transform: rotateY(180deg);
+}
+
+.flip h2 {
+    color: aliceblue;
+}
+
+.flip p {
+    color: rgb(208, 233, 255);
+    max-width: 350px;
+}
+
+.flip .btn {
+    width: fit-content;
+    margin: 0 auto;
+    border-radius: 25px;
+    border: 1px solid #328fb4;
+    padding-block: 6px;
+    color: aliceblue;
+    margin-top: 10px;
+}
+
+.flip .btn:hover {
+    background-color: #328fb4;
+    color: #fff;
+}
+
+.flip.ativo ~ #form-cadastro {
+    width: 600px;
+    transition: 1s ease;
 }
