@@ -31,6 +31,10 @@ form small a {
     cursor: pointer;
 }
 
+form .btn-primary {
+    margin-top: 10px;
+}
+
 /* Flip */
 main {
     perspective: 2000px;
@@ -42,6 +46,7 @@ main {
     transform-style: preserve-3d;
     background-image: linear-gradient(90deg, #32A1CD 0%, #3CC1F6 100%);
     border-radius: 0 8px 8px 0;
+    z-index: 2;
 }
 
 .flip.ativo {
@@ -89,4 +94,24 @@ main {
 .flip.ativo ~ #form-cadastro {
     width: 600px;
     transition: 1s ease;
+}
+
+.input-erro {
+    color: var(--cor-vermelho);
+    text-align: left;
+    display: none;
+    position: absolute;
+    bottom: -18px;
+}
+
+.input-erro.ativo {
+    display: block;
+}
+
+.btn-senha {
+    position: absolute;
+    right: 10px;
+    top: calc(50% + 1px);
+    cursor: pointer;
+    color: gray;
 }

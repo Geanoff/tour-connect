@@ -1,6 +1,7 @@
 .input-box {
     display: flex;
     flex-direction: column; 
+    position: relative;
 }
 
 .input-box label {
@@ -19,6 +20,7 @@
     font-size: 15px;
     outline: none;
     transition: .3s;
+    font-size: 14px;
 }
 
 .input-box input:focus {

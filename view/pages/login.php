@@ -46,8 +46,9 @@ require_once '../components/layout/base-inicio.php';
         </div>
         <div class="input-group flex gap-2">
             <div class="input-box w-[calc(50%-4px)]">
-                <label for="email">Email<span>*</span></label>
-                <input type="email" id="email" name="email" required>
+                <label for="c_email">Email<span>*</span></label>
+                <input type="email" id="c_email" name="email" required>
+                <small class="input-erro">Digite um email válido</small>
             </div>
             <div class="input-box w-[calc(50%-4px)]">
             <label for="telefone">Telefone<span>*</span></label>
@@ -56,12 +57,15 @@ require_once '../components/layout/base-inicio.php';
         </div>
         <div class="input-group flex gap-2">
             <div class="input-box w-[calc(50%-4px)]">
-                <label for="senha">Senha<span>*</span></label>
-                <input type="password" id="senha" name="senha" minlength="8" maxlength="20" required>
+                <label for="c_senha">Senha<span>*</span></label>
+                <input type="password" id="c_senha" name="senha" minlength="8" maxlength="20" required>
+                <i class="btn-senha fa-solid fa-eye"></i>
             </div>
             <div class="input-box w-[calc(50%-4px)]">
-                <label for="c_senha">Confirmar Senha<span>*</span></label>
-                <input type="password" id="c_senha" name="c_senha" minlength="8" maxlength="20" required>
+                <label for="r_senha">Confirmar Senha<span>*</span></label>
+                <input type="password" id="r_senha" name="r_senha" minlength="8" maxlength="20" required>
+                <i class=" btn-senha fa-solid fa-eye"></i>
+                <small class="input-erro">As senhas não coincidem</small>
             </div>
         </div>
         <button class="btn btn-primary">CADASTRAR</button>

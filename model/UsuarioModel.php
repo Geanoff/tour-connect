@@ -12,12 +12,34 @@ class UsuarioModel
         $this->pdo = $pdo;
     }
 
-    function login($email, $senha)
+    function login($dados)
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM {$this->tabela} WHERE email = :email AND senha = :senha");
-        $stmt->execute(['email' => $email, 'senha' => $senha]);
-        return $stmt->fetch();
+        try {
+            // Busca o usuário pelo e-mail
+            $query = "SELECT * FROM {$this->tabela} WHERE email = :email LIMIT 1";
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindParam(':email', $dados['email']);
+            $stmt->execute();
+
+            $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // Se não encontrou usuário
+            if (!$usuario) {
+                return false;
+            }
+
+            // Verifica a senha hash
+            if (!password_verify($dados['senha'], $usuario['senha'])) {
+                return false;
+            }
+
+            return $usuario; // login OK
+
+        } catch (PDOException $e) {
+            return false;
+        }
     }
+
 
     function cadastro($dados)
     {
