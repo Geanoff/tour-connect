@@ -172,7 +172,7 @@ body {
 .badge {
     background: var(--cor-principal, #3f3557);
     color: white;
-    padding: 8px 24px;
+    padding: 8px 16px;
     border-radius: 20px;
     font-size: 0.9rem;
     display: flex;
