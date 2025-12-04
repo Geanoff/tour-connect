@@ -1,0 +1,146 @@
+/* ========================================
+   ADMIN: Busca de Guias com Tags
+   ======================================== */
+
+/* Container de Busca */
+.guias-search-container {
+    position: relative;
+    background: var(--cor-fundo, #f8f9fa);
+    border-radius: 10px;
+    padding: 12px;
+    border: 2px solid var(--cor-borda, #e9ecef);
+}
+
+/* Tags dos Guias Selecionados */
+.guias-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+    min-height: 20px;
+}
+
+.guias-tags:empty {
+    margin-bottom: 0;
+}
+
+/* Tag Individual */
+.guia-tag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--cor-principal, #3f3557);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.guia-tag img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.guia-tag .remover-guia {
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 4px;
+    opacity: 0.7;
+}
+
+.guia-tag .remover-guia:hover {
+    opacity: 1;
+}
+
+/* Input de Busca */
+.input-busca-guia {
+    width: 100%;
+    padding: 10px 12px;
+    background: #fff;
+    border: 2px solid var(--cor-borda, #e9ecef);
+    border-radius: 8px;
+    color: var(--cor-texto, #333);
+    font-size: 0.95rem;
+}
+
+.input-busca-guia:focus {
+    outline: none;
+    border-color: var(--cor-azul, #32A1CD);
+}
+
+/* Dropdown de Sugestões */
+.guias-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 10px;
+    margin-top: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 100;
+    display: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--cor-borda, #e9ecef);
+}
+
+.guias-dropdown.ativo {
+    display: block;
+}
+
+/* Opção de Guia */
+.guia-opcao {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    border-bottom: 1px solid var(--cor-borda, #e9ecef);
+}
+
+.guia-opcao:last-child {
+    border-bottom: none;
+}
+
+.guia-opcao:hover {
+    background: var(--cor-fundo, #f8f9fa);
+}
+
+.guia-opcao img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.guia-opcao-info {
+    flex: 1;
+}
+
+.guia-opcao-nome {
+    font-weight: 600;
+    color: var(--cor-principal, #3f3557);
+}
+
+.guia-opcao-espec {
+    font-size: 0.8rem;
+    color: var(--cor-texto-claro, #6c757d);
+}
+
+.guia-opcao.ja-selecionado {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* Sem Resultado */
+.guias-dropdown .sem-resultado {
+    padding: 15px;
+    text-align: center;
+    color: var(--cor-texto-claro, #6c757d);
+}
+

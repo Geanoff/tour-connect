@@ -161,9 +161,15 @@ function buildPaginationUrl($pagina) {
         <?php else: ?>
             <div class="lista-passeios">
                 <?php foreach ($passeiosPaginados as $passeio): ?>
+                    <?php 
+                    $imgPasseio = $passeio['imagem'] ?? '';
+                    if ($imgPasseio && strpos($imgPasseio, 'http') !== 0) {
+                        $imgPasseio = '../../' . $imgPasseio;
+                    }
+                    ?>
                     <div class="passeio-card">
                         <div class="passeio-card__imagem">
-                            <img src="<?= htmlspecialchars($passeio['imagem']) ?>" alt="<?= htmlspecialchars($passeio['titulo']) ?>">
+                            <img src="<?= htmlspecialchars($imgPasseio) ?>" alt="<?= htmlspecialchars($passeio['titulo']) ?>">
                             <span class="passeio-card__localizacao">
                                 <i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($passeio['localizacao']) ?>
                             </span>
@@ -250,7 +256,7 @@ function buildPaginationUrl($pagina) {
         id: <?= $usuario['id'] ?>,
         nome: '<?= addslashes($usuario['nome']) ?>',
         email: '<?= addslashes($usuario['email']) ?>',
-        telefone: '<?= addslashes($usuario['telefone']) ?>'
+        telefone: '<?= addslashes($usuario['telefone'] ?? '') ?>'
     };
 </script>
 

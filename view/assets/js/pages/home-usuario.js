@@ -1,11 +1,5 @@
 /**
  * JavaScript da página Home do Usuário
- * 
- * Variáveis esperadas (definidas no PHP):
- * - window.usuarioConfig.id
- * - window.usuarioConfig.nome
- * - window.usuarioConfig.email
- * - window.usuarioConfig.telefone
  */
 
 // ========================================
@@ -28,30 +22,36 @@ function enviarSolicitacaoGuia(event) {
     const mensagem = document.querySelector('textarea[name="mensagem"]').value;
     const config = window.usuarioConfig;
     
-    // Dados que serão enviados ao backend
-    const dados = {
-        usuario_id: config.id,
-        nome: config.nome,
-        email: config.email,
-        telefone: config.telefone,
-        mensagem: mensagem
-    };
-    
-    // Aqui você fará a chamada AJAX para o backend
-    // Por enquanto, apenas simula o envio
-    console.log('Dados da solicitação:', dados);
-    
-    // Simula sucesso
-    alert('Solicitação enviada com sucesso!\n\nO administrador irá analisar seu pedido e entrar em contato em breve.');
-    fecharModalGuia();
-    
-    // Futuramente:
-    // fetch('../../controller/SolicitacaoGuiaController.php', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(dados)
-    // }).then(response => response.json())
-    //   .then(data => { ... });
+    const formData = new FormData();
+    formData.append('acao', 'criar');
+    formData.append('nome', config.nome);
+    formData.append('email', config.email);
+    formData.append('telefone', config.telefone);
+    formData.append('mensagem', mensagem);
+
+    fetch('../../controller/SolicitacaoGuiaController.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.text())
+    .then(text => {
+        console.log('Resposta do servidor:', text);
+        try {
+            const data = JSON.parse(text);
+            if (data.sucesso) {
+                alert('Solicitação enviada com sucesso!\n\nO administrador irá analisar seu pedido.');
+                fecharModalGuia();
+            } else {
+                alert(data.mensagem);
+            }
+        } catch(e) {
+            alert('Erro no servidor: ' + text);
+        }
+    })
+    .catch(err => {
+        alert('Erro de conexão: ' + err.message);
+        console.error(err);
+    });
 }
 
 // ========================================
@@ -76,4 +76,3 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-

@@ -1,0 +1,212 @@
+/* ========================================
+   COMPONENTE: Modais do Admin
+   ======================================== */
+
+/* Modal Base */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.ativo {
+    display: flex;
+}
+
+.modal-content {
+    background: #ffffff;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+/* Cabeçalho do Modal */
+.modal-header {
+    padding: 25px;
+    border-bottom: 1px solid var(--cor-borda, #e9ecef);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    color: var(--cor-principal, #3f3557);
+    font-weight: 600;
+    margin: 0;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--cor-texto-claro, #6c757d);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+    color: var(--cor-vermelho, #ff4d4d);
+}
+
+/* Corpo do Modal */
+.modal-body {
+    padding: 25px;
+}
+
+/* ========================================
+   MODAL PASSEIO - Tema Azul Escuro
+   ======================================== */
+
+#modal-passeio .modal-content {
+    background: #1a1a2e;
+}
+
+#modal-passeio .modal-header {
+    border-bottom-color: #0f3460;
+}
+
+#modal-passeio .modal-header h3 {
+    color: #00d9ff;
+}
+
+#modal-passeio .modal-close {
+    color: #8892b0;
+}
+
+#modal-passeio .modal-close:hover {
+    color: #ff4757;
+}
+
+#modal-passeio .form-group label {
+    color: #8892b0;
+}
+
+#modal-passeio .form-group input,
+#modal-passeio .form-group textarea,
+#modal-passeio .form-group select {
+    background: #0f3460;
+    border-color: #16213e;
+    color: #fff;
+}
+
+#modal-passeio .form-group input:focus,
+#modal-passeio .form-group textarea:focus,
+#modal-passeio .form-group select:focus {
+    border-color: #00d9ff;
+    background: #0f3460;
+}
+
+#modal-passeio .form-group input::placeholder,
+#modal-passeio .form-group textarea::placeholder {
+    color: #5a6a8a;
+}
+
+#modal-passeio .btn-primary {
+    background: #00d9ff;
+    color: #1a1a2e;
+}
+
+#modal-passeio .btn-primary:hover {
+    background: #00b8d9;
+}
+
+/* Sistema de busca de guias */
+#modal-passeio .guias-search-container {
+    background: #0f3460;
+    border-color: #16213e;
+}
+
+#modal-passeio .input-busca-guia {
+    background: #1a1a2e;
+    border-color: #16213e;
+    color: #fff;
+}
+
+#modal-passeio .input-busca-guia:focus {
+    border-color: #00d9ff;
+}
+
+#modal-passeio .guias-dropdown {
+    background: #1a1a2e;
+    border-color: #0f3460;
+}
+
+#modal-passeio .guia-opcao:hover {
+    background: #0f3460;
+}
+
+#modal-passeio .guia-opcao-nome {
+    color: #fff;
+}
+
+#modal-passeio .guia-tag {
+    background: #00d9ff;
+    color: #1a1a2e;
+}
+
+/* ========================================
+   MODAL GUIA - Tema Azul Escuro
+   ======================================== */
+
+#modal-guia .modal-content {
+    background: #1a1a2e;
+}
+
+#modal-guia .modal-header {
+    border-bottom-color: #0f3460;
+}
+
+#modal-guia .modal-header h3 {
+    color: #00d9ff;
+}
+
+#modal-guia .modal-close {
+    color: #8892b0;
+}
+
+#modal-guia .modal-close:hover {
+    color: #ff4757;
+}
+
+#modal-guia .form-group label {
+    color: #8892b0;
+}
+
+#modal-guia .form-group input,
+#modal-guia .form-group textarea,
+#modal-guia .form-group select {
+    background: #0f3460;
+    border-color: #16213e;
+    color: #fff;
+}
+
+#modal-guia .form-group input:focus,
+#modal-guia .form-group textarea:focus,
+#modal-guia .form-group select:focus {
+    border-color: #00d9ff;
+    background: #0f3460;
+}
+
+#modal-guia .form-group input::placeholder {
+    color: #5a6a8a;
+}
+
+#modal-guia .btn-primary {
+    background: #00d9ff;
+    color: #1a1a2e;
+}
+
+#modal-guia .btn-primary:hover {
+    background: #00b8d9;
+}
+

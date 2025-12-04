@@ -13,6 +13,7 @@ if (!isset($_SESSION['usuario_id'])) {
 $tituloPagina = 'Meus Agendamentos - Tour Connect';
 $cssPagina = 'meus-agendamentos.css';
 require_once '../components/layout/base-inicio.php';
+require_once '../../model/AgendamentoModel.php';
 
 // Dados do usuário logado
 $usuario = [
@@ -20,70 +21,45 @@ $usuario = [
     'nome' => $_SESSION['usuario_nome'] ?? 'Usuário'
 ];
 
-// Agendamentos mockados do usuário (futuramente virá do banco)
-$agendamentos = [
-    [
-        'id' => 1,
-        'passeio_id' => 1,
-        'passeio_titulo' => 'Trilha da Serra',
-        'passeio_imagem' => 'https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&h=300&fit=crop',
-        'passeio_localizacao' => 'Serra do Mar - Paraná',
-        'guia_nome' => 'Carlos Silva',
-        'guia_foto' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop',
-        'data' => '2025-12-10',
-        'horario' => '07:00',
-        'preco' => 75.00,
-        'status' => 'confirmado'
-    ],
-    [
-        'id' => 2,
-        'passeio_id' => 4,
-        'passeio_titulo' => 'Passeio de Barco',
-        'passeio_imagem' => 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=300&fit=crop',
-        'passeio_localizacao' => 'Baía de Paranaguá - PR',
-        'guia_nome' => 'Ana Oliveira',
-        'guia_foto' => 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop',
-        'data' => '2025-12-15',
-        'horario' => '08:00',
-        'preco' => 180.00,
-        'status' => 'confirmado'
-    ],
-    [
-        'id' => 3,
-        'passeio_id' => 2,
-        'passeio_titulo' => 'Cachoeira Azul',
-        'passeio_imagem' => 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=400&h=300&fit=crop',
-        'passeio_localizacao' => 'Vale do Ribeira - SP',
-        'guia_nome' => 'Pedro Santos',
-        'guia_foto' => 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop',
-        'data' => '2025-11-20',
-        'horario' => '06:00',
-        'preco' => 120.00,
-        'status' => 'concluido'
-    ],
-    [
-        'id' => 4,
-        'passeio_id' => 3,
-        'passeio_titulo' => 'City Tour Histórico',
-        'passeio_imagem' => 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400&h=300&fit=crop',
-        'passeio_localizacao' => 'Centro Histórico - Curitiba',
-        'guia_nome' => 'Carlos Silva',
-        'guia_foto' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop',
-        'data' => '2025-10-05',
-        'horario' => '14:00',
-        'preco' => 95.00,
-        'status' => 'cancelado'
-    ],
-];
+// Busca agendamentos do usuário no banco
+$agendamentoModel = new AgendamentoModel();
+$agendamentosDb = $agendamentoModel->buscarPorUsuario($_SESSION['usuario_id']);
+
+// Formata os agendamentos para o formato esperado pelo template
+$agendamentos = array_map(function($a) {
+    // Ajusta caminho da imagem
+    $imagem = $a['passeio_imagem'] ?? '';
+    if ($imagem && strpos($imagem, 'http') !== 0) {
+        $imagem = '../../' . $imagem;
+    }
+    $guiaFoto = $a['guia_foto'] ?? '';
+    if ($guiaFoto && strpos($guiaFoto, 'http') !== 0) {
+        $guiaFoto = '../../' . $guiaFoto;
+    }
+    
+    return [
+        'id' => $a['id'],
+        'passeio_id' => $a['id_destino'],
+        'passeio_titulo' => $a['passeio_titulo'],
+        'passeio_imagem' => $imagem ?: 'https://via.placeholder.com/400x300',
+        'passeio_localizacao' => $a['passeio_localizacao'],
+        'guia_nome' => $a['guia_nome'],
+        'guia_foto' => $guiaFoto ?: 'https://via.placeholder.com/80',
+        'data' => $a['data_passeio'],
+        'horario' => $a['horario'],
+        'preco' => $a['passeio_preco'] ?? 0,
+        'quantidade_pessoas' => $a['quantidade_pessoas'] ?? 1,
+        'status' => $a['status']
+    ];
+}, $agendamentosDb);
 
 // Função para formatar status
 function formatarStatus($status) {
     $statusMap = [
-        'confirmado' => ['texto' => 'Confirmado', 'classe' => 'status--confirmado', 'icone' => 'fa-check-circle'],
+        'agendado' => ['texto' => 'Agendado', 'classe' => 'status--agendado', 'icone' => 'fa-calendar-check'],
         'concluido' => ['texto' => 'Concluído', 'classe' => 'status--concluido', 'icone' => 'fa-flag-checkered'],
-        'cancelado' => ['texto' => 'Cancelado', 'classe' => 'status--cancelado', 'icone' => 'fa-times-circle'],
     ];
-    return $statusMap[$status] ?? $statusMap['confirmado'];
+    return $statusMap[$status] ?? $statusMap['agendado'];
 }
 
 // Filtrar por status se houver filtro
@@ -99,9 +75,8 @@ if ($filtroStatus !== 'todos') {
 // Contar por status
 $contadores = [
     'todos' => count($agendamentos),
-    'confirmado' => count(array_filter($agendamentos, fn($a) => $a['status'] === 'confirmado')),
+    'agendado' => count(array_filter($agendamentos, fn($a) => $a['status'] === 'agendado')),
     'concluido' => count(array_filter($agendamentos, fn($a) => $a['status'] === 'concluido')),
-    'cancelado' => count(array_filter($agendamentos, fn($a) => $a['status'] === 'cancelado')),
 ];
 ?>
 
@@ -128,20 +103,15 @@ $contadores = [
             <span class="filtro-btn__texto">Todos</span>
             <span class="filtro-btn__count"><?= $contadores['todos'] ?></span>
         </a>
-        <a href="?status=confirmado" class="filtro-btn filtro-btn--confirmado <?= $filtroStatus === 'confirmado' ? 'filtro-btn--ativo' : '' ?>">
-            <i class="fas fa-check-circle"></i>
-            <span class="filtro-btn__texto">Confirmados</span>
-            <span class="filtro-btn__count"><?= $contadores['confirmado'] ?></span>
+        <a href="?status=agendado" class="filtro-btn filtro-btn--agendado <?= $filtroStatus === 'agendado' ? 'filtro-btn--ativo' : '' ?>">
+            <i class="fas fa-calendar-check"></i>
+            <span class="filtro-btn__texto">Agendados</span>
+            <span class="filtro-btn__count"><?= $contadores['agendado'] ?></span>
         </a>
         <a href="?status=concluido" class="filtro-btn filtro-btn--concluido <?= $filtroStatus === 'concluido' ? 'filtro-btn--ativo' : '' ?>">
             <i class="fas fa-flag-checkered"></i>
             <span class="filtro-btn__texto">Concluídos</span>
             <span class="filtro-btn__count"><?= $contadores['concluido'] ?></span>
-        </a>
-        <a href="?status=cancelado" class="filtro-btn filtro-btn--cancelado <?= $filtroStatus === 'cancelado' ? 'filtro-btn--ativo' : '' ?>">
-            <i class="fas fa-times-circle"></i>
-            <span class="filtro-btn__texto">Cancelados</span>
-            <span class="filtro-btn__count"><?= $contadores['cancelado'] ?></span>
         </a>
     </section>
 
@@ -158,9 +128,6 @@ $contadores = [
                         Você ainda não fez nenhum agendamento.
                     <?php endif; ?>
                 </p>
-                <a href="home-usuario.php" class="btn-explorar">
-                    <i class="fas fa-compass"></i> Explorar Passeios
-                </a>
             </div>
         <?php else: ?>
             <?php foreach ($agendamentosFiltrados as $agendamento): ?>
@@ -187,6 +154,13 @@ $contadores = [
                                     <div>
                                         <span class="info-item__label">Data</span>
                                         <span class="info-item__valor"><?= date('d/m/Y', strtotime($agendamento['data'])) ?></span>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-users"></i>
+                                    <div>
+                                        <span class="info-item__label">Pessoas</span>
+                                        <span class="info-item__valor"><?= $agendamento['quantidade_pessoas'] ?? 1 ?></span>
                                     </div>
                                 </div>
                                 <div class="info-item">
@@ -217,11 +191,9 @@ $contadores = [
                                 <a href="passeio.php?id=<?= $agendamento['passeio_id'] ?>" class="btn-ver" title="Ver passeio">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <?php if ($agendamento['status'] === 'confirmado'): ?>
-                                    <button class="btn-cancelar" onclick="cancelarAgendamento(<?= $agendamento['id'] ?>)" title="Cancelar">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                <?php endif; ?>
+                                <button class="btn-excluir" onclick="excluirAgendamento(<?= $agendamento['id'] ?>)" title="Excluir">
+                                    <i class="fas fa-trash"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -230,21 +202,6 @@ $contadores = [
         <?php endif; ?>
     </section>
 </main>
-
-<!-- Modal de Confirmação de Cancelamento -->
-<div id="modal-cancelar" class="modal">
-    <div class="modal__conteudo modal__conteudo--pequeno">
-        <div class="modal__header modal__header--aviso">
-            <i class="fas fa-exclamation-triangle"></i>
-            <h2>Cancelar Agendamento</h2>
-            <p>Tem certeza que deseja cancelar este agendamento?</p>
-        </div>
-        <div class="modal__acoes">
-            <button class="btn-modal-cancelar" onclick="fecharModalCancelar()">Não, manter</button>
-            <button class="btn-modal-confirmar" onclick="confirmarCancelamento()">Sim, cancelar</button>
-        </div>
-    </div>
-</div>
 
 <?php
 $jsPagina = 'meus-agendamentos.js';
