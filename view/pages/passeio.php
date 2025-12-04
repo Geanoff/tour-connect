@@ -150,12 +150,16 @@ $horarios = ['06:00', '07:00', '08:00', '14:00', '15:00'];
                 <i class="fas fa-chevron-right"></i>
             </button>
         </div>
-        <div class="galeria__miniaturas__container">
+        <div class="galeria__miniaturas">
             <?php foreach ($passeio['imagens'] as $index => $imagem): ?>
-                <?php include '../components/cards/guia-card.php'; ?>
+                <img 
+                    src="<?= $imagem ?>" 
+                    alt="Miniatura <?= $index + 1 ?>" 
+                    class="galeria__thumb <?= $index === 0 ? 'galeria__thumb--ativa' : '' ?>"
+                    onclick="selecionarImagem(<?= $index ?>)"
+                >
             <?php endforeach; ?>
         </div>
-        
     </section>
 
     <!-- Informações do Passeio -->
@@ -175,10 +179,10 @@ $horarios = ['06:00', '07:00', '08:00', '14:00', '15:00'];
 
         <div class="passeio-info__badges">
             <span class="badge">
-                <i class="fas fa-clock"></i> <?= $passeio['duracao'] ?>
+                <?= $passeio['duracao'] ?>
             </span>
             <span class="badge">
-                <i class="fas fa-signal"></i> <?= $passeio['dificuldade'] ?>
+               <?= $passeio['dificuldade'] ?>
             </span>
         </div>
 
