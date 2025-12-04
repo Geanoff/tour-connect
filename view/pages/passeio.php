@@ -8,10 +8,13 @@ $usuarioLogado = isset($_SESSION['usuario_id']);
 $tituloPagina = 'Detalhes do Passeio';
 $cssPagina = 'passeio.css';
 require_once '../components/layout/base-inicio.php';
+require_once '../../model/DestinoModel.php';
 
-$passeioId = isset($_GET['id']) ? (int)$_GET['id'] : 1;
+$destinoId = $_GET['id'];
 
-$passeio = isset($todosPasseios[$passeioId]) ? $todosPasseios[$passeioId] : $todosPasseios[1];
+$modelDestino = new DestinoModel();
+
+$destino = (array) $modelDestino->buscarDestinoEspecifico($destinoId);
 
 $guias = [
     [
@@ -43,7 +46,7 @@ $horarios = ['06:00', '07:00', '08:00', '14:00', '15:00'];
 <main class="passeio-page">
     <section class="galeria">
         <div class="galeria__principal">
-            <img id="imagem-principal" src="<?= $passeio['imagens'][0] ?>" alt="<?= $passeio['titulo'] ?>">
+            <img id="imagem-principal" src="<?= htmlspecialchars($destino['imagem']) ?>" alt="<?= htmlspecialchars($destino['titulo']) ?>">
             <button class="galeria__nav galeria__nav--prev" onclick="mudarImagem(-1)">
                 <i class="fas fa-chevron-left"></i>
             </button>
@@ -52,43 +55,35 @@ $horarios = ['06:00', '07:00', '08:00', '14:00', '15:00'];
             </button>
         </div>
         <div class="galeria__miniaturas">
-            <?php foreach ($passeio['imagens'] as $index => $imagem): ?>
-                <img 
-                    src="<?= $imagem ?>" 
-                    alt="Miniatura <?= $index + 1 ?>" 
-                    class="galeria__thumb <?= $index === 0 ? 'galeria__thumb--ativa' : '' ?>"
-                    onclick="selecionarImagem(<?= $index ?>)"
-                >
-            <?php endforeach; ?>
+            <!-- carrossel imagens -->
         </div>
     </section>
-
     <section class="passeio-info">
         <div class="passeio-info__header">
             <div>
-                <h1 class="passeio-info__titulo"><?= $passeio['titulo'] ?></h1>
+                <h1 class="passeio-info__titulo"><?= htmlspecialchars($destino['titulo']) ?></h1>
                 <p class="passeio-info__localizacao">
-                    <i class="fas fa-map-marker-alt"></i> <?= $passeio['localizacao'] ?>
+                    <i class="fas fa-map-marker-alt"></i> <?= $destino['localizacao'] ?>
                 </p>
             </div>
             <div class="passeio-info__preco">
-                <span class="passeio-info__preco-valor">R$ <?= number_format($passeio['preco'], 2, ',', '.') ?></span>
+                <span class="passeio-info__preco-valor">R$ <?= number_format($destino['preco'], 2, ',', '.') ?></span>
                 <span class="passeio-info__preco-pessoa">por pessoa</span>
             </div>
         </div>
 
         <div class="passeio-info__badges">
             <span class="badge">
-                <i class="fas fa-clock"></i> <?= $passeio['duracao'] ?>
+                <i class="fas fa-clock"></i> <?= $destino['duracao'] ?>
             </span>
             <span class="badge">
-                <i class="fas fa-signal"></i> <?= $passeio['dificuldade'] ?>
+                <i class="fas fa-signal"></i> <?= $destino['dificuldade'] ?>
             </span>
         </div>
 
         <div class="passeio-info__descricao">
             <h2>Sobre o passeio</h2>
-            <p><?= nl2br(htmlspecialchars($passeio['descricao'])) ?></p>
+            <p><?= nl2br(htmlspecialchars($destino['descricao'])) ?></p>
         </div>
     </section>
 
@@ -149,7 +144,7 @@ $horarios = ['06:00', '07:00', '08:00', '14:00', '15:00'];
                 </div>
                 <div class="resumo-item resumo-item--total">
                     <span class="resumo-label">Total:</span>
-                    <span class="resumo-valor resumo-valor--preco">R$ <?= number_format($passeio['preco'], 2, ',', '.') ?></span>
+                    <span class="resumo-valor resumo-valor--preco">R$ <?= number_format($destino['preco'], 2, ',', '.') ?></span>
                 </div>
             </div>
             <button class="btn-agendar" onclick="confirmarAgendamento()">
@@ -158,15 +153,6 @@ $horarios = ['06:00', '07:00', '08:00', '14:00', '15:00'];
         </div>
     </section>
 </main>
-
-<script>
-    window.passeioConfig = {
-        usuarioLogado: <?= $usuarioLogado ? 'true' : 'false' ?>,
-        imagens: <?= json_encode($passeio['imagens']) ?>,
-        guias: <?= json_encode($guias) ?>
-    };
-</script>
-
 <?php
 $jsPagina = 'passeio.js';
 require_once '../components/layout/base-fim.php';

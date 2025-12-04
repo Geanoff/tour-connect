@@ -22,3 +22,8 @@
     background-color: var(--cor-azul);
     color: #fff;
 }
+
+.btn-buscar i
+{
+    color: white;
+}

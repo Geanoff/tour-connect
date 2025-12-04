@@ -15,16 +15,44 @@ class DestinoModel
     function buscarDestinos()
     {
         try {
-            // Busca o usuário pelo e-mail
-            $query = "SELECT * FROM {$this->tabela}";
+            $query = "
+                SELECT d.*, i.caminho AS imagem
+                FROM {$this->tabela} d
+                LEFT JOIN imagens i ON d.id_imagem = i.id
+            ";
+
             $stmt = $this->pdo->prepare($query);
+            $stmt->execute();
+
+            $destinos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $destinos;
+
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    function buscarDestinoEspecifico($id)
+    {
+        try
+        {
+            $query = "
+                SELECT d.*, i.caminho AS imagem
+                FROM {$this->tabela} d
+                LEFT JOIN imagens i ON d.id_imagem = i.id
+                WHERE d.id = :id
+            ";
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
 
             $destino = $stmt->fetch(PDO::FETCH_ASSOC);
 
             return $destino;
-
-        } catch (PDOException $e) {
+        }
+        catch (Exception $e)
+        {
             return false;
         }
     }

@@ -19,6 +19,15 @@ CREATE TABLE guia(
     especialidade VARCHAR(255) NOT NULL
 );
 
+
+CREATE TABLE imagens (
+    id INT AUTO_INCREMENT,
+	PRIMARY KEY (id),
+    caminho VARCHAR(255) NOT NULL,
+    data_upload TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    data_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 CREATE TABLE destino(
     id INT AUTO_INCREMENT,
 	PRIMARY KEY (id),
@@ -29,8 +38,10 @@ CREATE TABLE destino(
     duracao VARCHAR(100) NOT NULL,
     dificuldade VARCHAR(50) NOT NULL,
     preco DECIMAL(10, 2) NOT NULL,
-    imagem_id INT NOT NULL,  
-    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    id_imagem INT NOT NULL,  
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	foreign key (id_imagem)
+		references imagens(id)
 );
 
 create table agendamento(
@@ -55,12 +66,4 @@ create table usuario_agendamento(
 		references usuario(id),
 	foreign key (id_agendamento)
 		references agendamento(id)
-);
-
-CREATE TABLE imagens (
-    id INT AUTO_INCREMENT,
-	PRIMARY KEY (id),
-    caminho VARCHAR(255) NOT NULL,
-    data_upload TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    data_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

@@ -53,15 +53,15 @@ $estados = [
     'TO' => 'Tocantins',
 ];
 
-$destinos = new DestinoModel();
-$todosPasseios = $destinos->buscarDestinos();
+$modelDestino = new DestinoModel();
+$todosPasseios = $modelDestino->buscarDestinos();
 
-$passeiiosFiltrados = $todosPasseios;
+$passeiosFiltrados = $todosPasseios;
 $termoBusca = isset($_GET['busca']) ? trim($_GET['busca']) : '';
 $estadoFiltro = isset($_GET['estado']) ? $_GET['estado'] : '';
 
 if (!empty($termoBusca)) {
-    $passeiiosFiltrados = array_filter($passeiiosFiltrados, function($p) use ($termoBusca) {
+    $passeiosFiltrados = array_filter($passeiosFiltrados, function($p) use ($termoBusca) {
         return stripos($p['titulo'], $termoBusca) !== false || 
                stripos($p['descricao'], $termoBusca) !== false ||
                stripos($p['localizacao'], $termoBusca) !== false;
@@ -69,20 +69,20 @@ if (!empty($termoBusca)) {
 }
 
 if (!empty($estadoFiltro)) {
-    $passeiiosFiltrados = array_filter($passeiiosFiltrados, function($p) use ($estadoFiltro) {
+    $passeiosFiltrados = array_filter($passeiosFiltrados, function($p) use ($estadoFiltro) {
         return stripos($p['localizacao'], $estadoFiltro) !== false ||
                stripos($p['localizacao'], '- ' . $estadoFiltro) !== false;
     });
 }
 
 $itensPorPagina = 6;
-$totalItens = count($passeiiosFiltrados);
+$totalItens = count($passeiosFiltrados);
 $totalPaginas = ceil($totalItens / $itensPorPagina);
 $paginaAtual = isset($_GET['pagina']) ? max(1, (int)$_GET['pagina']) : 1;
 $paginaAtual = min($paginaAtual, max(1, $totalPaginas));
 
 $inicio = ($paginaAtual - 1) * $itensPorPagina;
-$passeiosPaginados = array_slice($passeiiosFiltrados, $inicio, $itensPorPagina);
+$passeiosPaginados = array_slice($passeiosFiltrados, $inicio, $itensPorPagina);
 
 function buildPaginationUrl($pagina) {
     $params = $_GET;
@@ -160,10 +160,10 @@ function buildPaginationUrl($pagina) {
             </div>
         <?php else: ?>
             <div class="lista-passeios">
-                <?php foreach ($todosPasseios as $passeio): ?>
+                <?php foreach ($passeiosPaginados as $passeio): ?>
                     <div class="passeio-card">
                         <div class="passeio-card__imagem">
-                            <img src="<?= htmlspecialchars($todosPasseios['imagem']) ?>" alt="<?= htmlspecialchars($passeio['titulo']) ?>">
+                            <img src="<?= htmlspecialchars($passeio['imagem']) ?>" alt="<?= htmlspecialchars($passeio['titulo']) ?>">
                             <span class="passeio-card__localizacao">
                                 <i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($passeio['localizacao']) ?>
                             </span>

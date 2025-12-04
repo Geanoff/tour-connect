@@ -4,11 +4,9 @@ $cssPagina = 'inicio.css';
 require_once '../components/layout/base-inicio.php';
 require_once '../../model/DestinoModel.php';
 
-$destinos = new DestinoModel();
+$modelDestino = new DestinoModel();
 
-$passeio = $destinos->buscarDestinos();
-
-$passeiiosDestaque = array_slice($passeios, 0, 4);
+$destinosEmDestaque = $modelDestino->buscarDestinos();
 ?>
 
 <section class="hero">
@@ -22,7 +20,7 @@ $passeiiosDestaque = array_slice($passeios, 0, 4);
 <section class="secao-passeios">
     <h2 class="secao-passeios__titulo">Passeios em destaque</h2>
     <div class="lista-passeios">
-        <?php foreach ($passeiiosDestaque as $passeio): ?>
+        <?php foreach ($destinosEmDestaque as $destinos): ?>
             <?php include '../components/cards/passeio-card.php'; ?>
         <?php endforeach; ?>
     </div>
