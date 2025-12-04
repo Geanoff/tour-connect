@@ -75,12 +75,20 @@ body {
     right: 20px;
 }
 
+.galeria__miniaturas__container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
 .galeria__miniaturas {
     display: flex;
-    gap: 12px;
     margin-top: 15px;
     justify-content: center;
     flex-wrap: wrap;
+    width: auto;
 }
 
 .galeria__thumb {
