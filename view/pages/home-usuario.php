@@ -13,8 +13,8 @@ if (!isset($_SESSION['usuario_id'])) {
 $tituloPagina = 'Início - Tour Connect';
 $cssPagina = 'home-usuario.css';
 require_once '../components/layout/base-inicio.php';
+require_once '../../model/DestinoModel.php';
 
-// Dados do usuário logado (vem da sessão)
 $usuario = [
     'id' => $_SESSION['usuario_id'],
     'nome' => $_SESSION['usuario_nome'] ?? 'Usuário',
@@ -22,7 +22,6 @@ $usuario = [
     'telefone' => $_SESSION['usuario_telefone'] ?? ''
 ];
 
-// Estados disponíveis para filtro (todos os estados do Brasil)
 $estados = [
     '' => 'Todos os estados',
     'AC' => 'Acre',
@@ -54,97 +53,15 @@ $estados = [
     'TO' => 'Tocantins',
 ];
 
-// Dados mockados dos passeios (futuramente virá do banco)
-$todosPasseios = [
-    [
-        'id' => 1,
-        'imagem' => 'https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&h=300&fit=crop',
-        'titulo' => 'Trilha da Serra',
-        'descricao' => 'Aventura em meio à natureza com vistas incríveis.',
-        'localizacao' => 'Serra do Mar - PR',
-        'preco' => 75.00
-    ],
-    [
-        'id' => 2,
-        'imagem' => 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=400&h=300&fit=crop',
-        'titulo' => 'Cachoeira Azul',
-        'descricao' => 'Um dos destinos mais procurados para quem ama água e natureza.',
-        'localizacao' => 'Vale do Ribeira - SP',
-        'preco' => 120.00
-    ],
-    [
-        'id' => 3,
-        'imagem' => 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=400&h=300&fit=crop',
-        'titulo' => 'City Tour Histórico',
-        'descricao' => 'Explore os pontos turísticos e históricos da cidade.',
-        'localizacao' => 'Curitiba - PR',
-        'preco' => 95.00
-    ],
-    [
-        'id' => 4,
-        'imagem' => 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=300&fit=crop',
-        'titulo' => 'Passeio de Barco',
-        'descricao' => 'Navegue pelas águas cristalinas e descubra paisagens deslumbrantes.',
-        'localizacao' => 'Paranaguá - PR',
-        'preco' => 180.00
-    ],
-    [
-        'id' => 5,
-        'imagem' => 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop',
-        'titulo' => 'Mirante das Nuvens',
-        'descricao' => 'Vista panorâmica de tirar o fôlego no topo da montanha.',
-        'localizacao' => 'Campos Gerais - PR',
-        'preco' => 90.00
-    ],
-    [
-        'id' => 6,
-        'imagem' => 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=300&fit=crop',
-        'titulo' => 'Praias do Sul',
-        'descricao' => 'Conheça as praias mais bonitas do litoral catarinense.',
-        'localizacao' => 'Florianópolis - SC',
-        'preco' => 150.00
-    ],
-    [
-        'id' => 7,
-        'imagem' => 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=300&fit=crop',
-        'titulo' => 'Vale dos Dinossauros',
-        'descricao' => 'Explore o sítio paleontológico mais famoso da região.',
-        'localizacao' => 'Ponta Grossa - PR',
-        'preco' => 85.00
-    ],
-    [
-        'id' => 8,
-        'imagem' => 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&h=300&fit=crop',
-        'titulo' => 'Pôr do Sol na Montanha',
-        'descricao' => 'Assista ao pôr do sol mais bonito da região serrana.',
-        'localizacao' => 'Morretes - PR',
-        'preco' => 65.00
-    ],
-    [
-        'id' => 9,
-        'imagem' => 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=400&h=300&fit=crop',
-        'titulo' => 'Mergulho em Ilha',
-        'descricao' => 'Mergulhe nas águas cristalinas e veja a vida marinha.',
-        'localizacao' => 'Bombinhas - SC',
-        'preco' => 220.00
-    ],
-    [
-        'id' => 10,
-        'imagem' => 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop',
-        'titulo' => 'Floresta Encantada',
-        'descricao' => 'Caminhe por trilhas cercadas de araucárias centenárias.',
-        'localizacao' => 'Lapa - PR',
-        'preco' => 70.00
-    ],
-];
+$modelDestino = new DestinoModel();
+$todosPasseios = $modelDestino->buscarDestinos();
 
-// Filtrar passeios se houver busca ou filtro de estado
-$passeiiosFiltrados = $todosPasseios;
+$passeiosFiltrados = $todosPasseios;
 $termoBusca = isset($_GET['busca']) ? trim($_GET['busca']) : '';
 $estadoFiltro = isset($_GET['estado']) ? $_GET['estado'] : '';
 
 if (!empty($termoBusca)) {
-    $passeiiosFiltrados = array_filter($passeiiosFiltrados, function($p) use ($termoBusca) {
+    $passeiosFiltrados = array_filter($passeiosFiltrados, function($p) use ($termoBusca) {
         return stripos($p['titulo'], $termoBusca) !== false || 
                stripos($p['descricao'], $termoBusca) !== false ||
                stripos($p['localizacao'], $termoBusca) !== false;
@@ -152,28 +69,21 @@ if (!empty($termoBusca)) {
 }
 
 if (!empty($estadoFiltro)) {
-    $passeiiosFiltrados = array_filter($passeiiosFiltrados, function($p) use ($estadoFiltro) {
-        // Busca a sigla do estado na localização (ex: "PR" em "Serra do Mar - Paraná")
+    $passeiosFiltrados = array_filter($passeiosFiltrados, function($p) use ($estadoFiltro) {
         return stripos($p['localizacao'], $estadoFiltro) !== false ||
                stripos($p['localizacao'], '- ' . $estadoFiltro) !== false;
     });
 }
 
-// Reindexar array após filtros
-$passeiiosFiltrados = array_values($passeiiosFiltrados);
-
-// Paginação
 $itensPorPagina = 6;
-$totalItens = count($passeiiosFiltrados);
+$totalItens = count($passeiosFiltrados);
 $totalPaginas = ceil($totalItens / $itensPorPagina);
 $paginaAtual = isset($_GET['pagina']) ? max(1, (int)$_GET['pagina']) : 1;
-$paginaAtual = min($paginaAtual, max(1, $totalPaginas)); // Não permite página maior que o total
+$paginaAtual = min($paginaAtual, max(1, $totalPaginas));
 
-// Pegar apenas os itens da página atual
 $inicio = ($paginaAtual - 1) * $itensPorPagina;
-$passeiosPaginados = array_slice($passeiiosFiltrados, $inicio, $itensPorPagina);
+$passeiosPaginados = array_slice($passeiosFiltrados, $inicio, $itensPorPagina);
 
-// Função para manter os parâmetros de busca na paginação
 function buildPaginationUrl($pagina) {
     $params = $_GET;
     $params['pagina'] = $pagina;
@@ -182,7 +92,6 @@ function buildPaginationUrl($pagina) {
 ?>
 
 <main class="home-usuario">
-    <!-- Header do Usuário -->
     <section class="usuario-header">
         <div class="usuario-header__bemvindo">
             <h1>Olá, <span><?= htmlspecialchars($usuario['nome']) ?></span>! 👋</h1>
@@ -203,7 +112,6 @@ function buildPaginationUrl($pagina) {
         </div>
     </section>
 
-    <!-- Busca e Filtros -->
     <section class="busca-filtros">
         <form method="GET" class="busca-form">
             <div class="busca-input-wrapper">
@@ -231,8 +139,6 @@ function buildPaginationUrl($pagina) {
             </button>
         </form>
     </section>
-
-    <!-- Resultados -->
     <section class="passeios-resultado">
         <div class="resultado-header">
             <h2>
