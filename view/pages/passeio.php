@@ -174,10 +174,10 @@ $horarios = ['06:00', '07:00', '08:00', '14:00', '15:00'];
 
         <div class="passeio-info__badges">
             <span class="badge">
-                <i class="fas fa-clock"></i> <?= $passeio['duracao'] ?>
+                <?= $passeio['duracao'] ?>
             </span>
             <span class="badge">
-                <i class="fas fa-signal"></i> <?= $passeio['dificuldade'] ?>
+                <?= $passeio['dificuldade'] ?>
             </span>
         </div>
 
