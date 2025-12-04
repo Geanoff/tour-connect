@@ -150,11 +150,16 @@ $horarios = ['06:00', '07:00', '08:00', '14:00', '15:00'];
                 <i class="fas fa-chevron-right"></i>
             </button>
         </div>
-        
-        <?php foreach ($passeio['imagens'] as $index => $imagem): ?>
-            <?php include '../components/cards/guia-card.php'; ?>
-        <?php endforeach; ?>
-        
+        <div class="galeria__miniaturas">
+            <?php foreach ($passeio['imagens'] as $index => $imagem): ?>
+                <img 
+                    src="<?= $imagem ?>" 
+                    alt="Miniatura <?= $index + 1 ?>" 
+                    class="galeria__thumb <?= $index === 0 ? 'galeria__thumb--ativa' : '' ?>"
+                    onclick="selecionarImagem(<?= $index ?>)"
+                >
+            <?php endforeach; ?>
+        </div>
     </section>
 
     <!-- Informações do Passeio -->
@@ -258,99 +263,13 @@ $horarios = ['06:00', '07:00', '08:00', '14:00', '15:00'];
     </section>
 </main>
 
+<!-- Configuração de dados do PHP para o JavaScript -->
 <script>
-// Verifica se o usuário está logado
-const usuarioLogado = <?= $usuarioLogado ? 'true' : 'false' ?>;
-
-// Dados das imagens para a galeria
-const imagens = <?= json_encode($passeio['imagens']) ?>;
-let imagemAtual = 0;
-
-// Dados dos guias
-const guiasData = <?= json_encode($guias) ?>;
-
-// Estado do agendamento
-let agendamento = {
-    guiaId: null,
-    guiaNome: null,
-    data: null,
-    horario: null
-};
-
-// Funções da Galeria
-function mudarImagem(direcao) {
-    imagemAtual += direcao;
-    if (imagemAtual < 0) imagemAtual = imagens.length - 1;
-    if (imagemAtual >= imagens.length) imagemAtual = 0;
-    atualizarGaleria();
-}
-
-function selecionarImagem(index) {
-    imagemAtual = index;
-    atualizarGaleria();
-}
-
-function atualizarGaleria() {
-    document.getElementById('imagem-principal').src = imagens[imagemAtual];
-    document.querySelectorAll('.galeria__thumb').forEach((thumb, index) => {
-        thumb.classList.toggle('galeria__thumb--ativa', index === imagemAtual);
-    });
-}
-
-// Funções de Agendamento
-function selecionarGuia(guiaId) {
-    const guia = guiasData.find(g => g.id === guiaId);
-    agendamento.guiaId = guiaId;
-    agendamento.guiaNome = guia.nome;
-
-    document.querySelectorAll('.guia-card').forEach(card => {
-        card.classList.toggle('guia-card--selecionado', parseInt(card.dataset.guiaId) === guiaId);
-    });
-
-    document.getElementById('resumo-guia').textContent = guia.nome;
-}
-
-function selecionarHorario(horario) {
-    agendamento.horario = horario;
-
-    document.querySelectorAll('.horario-btn').forEach(btn => {
-        btn.classList.toggle('horario-btn--selecionado', btn.dataset.horario === horario);
-    });
-
-    document.getElementById('resumo-horario').textContent = horario;
-}
-
-// Atualizar data no resumo
-document.getElementById('data-passeio').addEventListener('change', function() {
-    agendamento.data = this.value;
-    const dataFormatada = new Date(this.value + 'T00:00:00').toLocaleDateString('pt-BR');
-    document.getElementById('resumo-data').textContent = dataFormatada;
-});
-
-function confirmarAgendamento() {
-    // Verifica se o usuário está logado
-    if (!usuarioLogado) {
-        alert('Você precisa estar logado para fazer um agendamento.');
-        window.location.href = 'login.php';
-        return;
-    }
-
-    if (!agendamento.guiaId) {
-        alert('Por favor, selecione um guia.');
-        return;
-    }
-    if (!agendamento.data) {
-        alert('Por favor, selecione uma data.');
-        return;
-    }
-    if (!agendamento.horario) {
-        alert('Por favor, selecione um horário.');
-        return;
-    }
-
-    // Aqui você pode enviar para o backend via AJAX
-    alert(`Agendamento confirmado!\n\nGuia: ${agendamento.guiaNome}\nData: ${document.getElementById('resumo-data').textContent}\nHorário: ${agendamento.horario}`);
-}
+    window.passeioConfig = {
+        usuarioLogado: <?= $usuarioLogado ? 'true' : 'false' ?>,
+        imagens: <?= json_encode($passeio['imagens']) ?>,
+        guias: <?= json_encode($guias) ?>
+    };
 </script>
 
 <?php

@@ -18,11 +18,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'senha'    => $_POST['senha'] ?? null,
     ];
 
-    // Verifica se o usuário existe
+    // Realiza o cadastro
     $cadastro = $usuarioModel->cadastro($dados);
     if ($cadastro) {
-        echo 'CADASTRO com Sucesso - mudar no controller a rota!';
-        // header('Location: ../view/pages/home.php');
+        // Faz login automático após cadastro
+        $loginUsuario = $usuarioModel->login($dados);
+        if ($loginUsuario) {
+            $_SESSION['usuario_id'] = $loginUsuario['id'];
+            $_SESSION['usuario_nome'] = $loginUsuario['nome'];
+            $_SESSION['usuario_email'] = $loginUsuario['email'];
+            $_SESSION['usuario_telefone'] = $loginUsuario['telefone'];
+        }
+        
+        // Redireciona para a home do usuário
+        header('Location: ../view/pages/home-usuario.php');
         exit;
     } else {
         // Mensagem de erro

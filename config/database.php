@@ -2,7 +2,7 @@
     // BANCO DE DADOS LOCAL:
         $host = 'localhost';
         $port = 3306;
-        $dbname = 'tour-connect';
+        $dbname = 'tourconnect';
         $user = 'root';
         $password = '';
     
