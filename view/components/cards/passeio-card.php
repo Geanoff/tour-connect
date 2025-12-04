@@ -18,6 +18,8 @@
     <div class="passeio-card__conteudo">
         <h3 class="passeio-card__titulo"><?= htmlspecialchars($passeio['titulo']) ?></h3>
         <p class="passeio-card__descricao"><?= htmlspecialchars($passeio['descricao']) ?></p>
+    </div>
+    <div class="btn-passeio-card">
         <?php if (isset($passeio['preco'])): ?>
             <span class="passeio-card__preco">R$ <?= number_format($passeio['preco'], 2, ',', '.') ?></span>
         <?php endif; ?>
