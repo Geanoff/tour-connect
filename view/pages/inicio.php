@@ -6,7 +6,7 @@ require_once '../../model/DestinoModel.php';
 
 $modelDestino = new DestinoModel();
 
-$destinosEmDestaque = $modelDestino->buscarDestinos();
+$destinosEmDestaque = $modelDestino->buscarDestinosComLimite(4, 0);
 ?>
 
 <section class="hero">

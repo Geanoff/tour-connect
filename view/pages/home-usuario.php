@@ -102,10 +102,17 @@ function buildPaginationUrl($pagina) {
                 <i class="fas fa-calendar-alt"></i>
                 <span>Meus Agendamentos</span>
             </a>
-            <a href="#" onclick="abrirModalGuia()" class="btn-ser-guia">
-                <i class="fas fa-user-tie"></i>
-                <span>Quero ser Guia</span>
-            </a>
+            <?php if($usuario['email'] === 'administrador@example.com'): ?>
+                <a href="admin/index.php" class="btn-ser-guia">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Voltar ao menu admin</span>
+                </a>    
+            <?php else: ?>
+                <a href="#" onclick="abrirModalGuia()" class="btn-ser-guia">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Quero ser Guia</span>
+                </a>
+            <?php endif ?>
             <a href="../../controller/LogoutController.php" class="btn-sair">
                 <i class="fas fa-sign-out-alt"></i>
             </a>
@@ -161,9 +168,15 @@ function buildPaginationUrl($pagina) {
         <?php else: ?>
             <div class="lista-passeios">
                 <?php foreach ($passeiosPaginados as $passeio): ?>
+                    <?php 
+                    $imgPasseio = $passeio['imagem'] ?? '';
+                    if ($imgPasseio && strpos($imgPasseio, 'http') !== 0) {
+                        $imgPasseio = '../../' . $imgPasseio;
+                    }
+                    ?>
                     <div class="passeio-card">
                         <div class="passeio-card__imagem">
-                            <img src="<?= htmlspecialchars($passeio['imagem']) ?>" alt="<?= htmlspecialchars($passeio['titulo']) ?>">
+                            <img src="<?= htmlspecialchars($imgPasseio) ?>" alt="<?= htmlspecialchars($passeio['titulo']) ?>">
                             <span class="passeio-card__localizacao">
                                 <i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($passeio['localizacao']) ?>
                             </span>
@@ -250,7 +263,7 @@ function buildPaginationUrl($pagina) {
         id: <?= $usuario['id'] ?>,
         nome: '<?= addslashes($usuario['nome']) ?>',
         email: '<?= addslashes($usuario['email']) ?>',
-        telefone: '<?= addslashes($usuario['telefone']) ?>'
+        telefone: '<?= addslashes($usuario['telefone'] ?? '') ?>'
     };
 </script>
 

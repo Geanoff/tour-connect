@@ -311,6 +311,33 @@ body {
     transition: opacity 0.3s ease;
 }
 
+/* Mensagem sem guias */
+.sem-guias {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+    border-radius: 12px;
+    border: 2px dashed #ffcccc;
+}
+
+.sem-guias i {
+    font-size: 3rem;
+    color: #ff9999;
+    margin-bottom: 15px;
+}
+
+.sem-guias p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #cc6666;
+    margin-bottom: 8px;
+}
+
+.sem-guias span {
+    font-size: 0.9rem;
+    color: #999;
+}
+
 /* Data e Horário */
 .agendamento__datetime {
     display: grid;
@@ -417,6 +444,119 @@ body {
 .resumo-valor--preco {
     font-size: 1.4rem;
     color: var(--cor-verde, #51CD32);
+}
+
+/* Seção de Participantes */
+.agendamento__participantes {
+    margin-bottom: 35px;
+    padding: 25px;
+    background: #f8f9fa;
+    border-radius: 12px;
+}
+
+.agendamento__participantes h3 {
+    font-size: 1.1rem;
+    color: var(--cor-principal, #3f3557);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.agendamento__participantes h3 i {
+    color: var(--cor-azul, #32A1CD);
+}
+
+.participantes-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.participantes-header label {
+    font-weight: 500;
+    color: #555;
+}
+
+.quantidade-controle {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-qtd {
+    width: 36px;
+    height: 36px;
+    border: 2px solid var(--cor-azul, #32A1CD);
+    background: white;
+    color: var(--cor-azul, #32A1CD);
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-qtd:hover {
+    background: var(--cor-azul, #32A1CD);
+    color: white;
+}
+
+#quantidade-pessoas {
+    width: 50px;
+    text-align: center;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.lista-participantes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.participante-item {
+    display: grid;
+    grid-template-columns: 1fr 100px;
+    gap: 10px;
+}
+
+.participante-item input {
+    padding: 12px 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: border-color 0.3s;
+}
+
+.participante-item input:focus {
+    outline: none;
+    border-color: var(--cor-azul, #32A1CD);
+}
+
+.vagas-info {
+    margin-top: 15px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.vagas-disponiveis {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.vagas-esgotado {
+    background: #ffebee;
+    color: #c62828;
 }
 
 .btn-agendar {

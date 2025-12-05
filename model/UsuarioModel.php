@@ -3,7 +3,7 @@ require_once __DIR__ . "/../config/database.php";
 
 class UsuarioModel
 {
-    private $tabela = 'usuario';
+    private $tabela = 'usuarios';
     private $pdo;
 
     public function __construct()

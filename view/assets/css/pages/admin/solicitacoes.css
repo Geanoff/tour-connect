@@ -1,0 +1,96 @@
+/* ========================================
+   ADMIN: Lista de Solicitações
+   ======================================== */
+
+/* Badge de notificação */
+.badge-notif {
+    background: var(--cor-vermelho, #ff4d4d);
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-left: 5px;
+}
+
+/* Lista */
+.solicitacoes-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Card de Solicitação */
+.solicitacao-card {
+    background: var(--cor-card, #ffffff);
+    border-radius: 16px;
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.solicitacao-card.nao-lida {
+    border-left: 4px solid var(--cor-verde, #51CD32);
+}
+
+.solicitacao-card.lida {
+    opacity: 0.7;
+}
+
+/* Informações da Solicitação */
+.solicitacao-info {
+    flex: 1;
+}
+
+.solicitacao-info h4 {
+    color: var(--cor-principal, #3f3557);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+}
+
+.solicitacao-info h4 .nova {
+    background: var(--cor-verde, #51CD32);
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+.solicitacao-info p {
+    color: var(--cor-texto-claro, #6c757d);
+    font-size: 0.9rem;
+    margin: 4px 0;
+}
+
+.solicitacao-info p i {
+    width: 20px;
+    color: var(--cor-azul, #32A1CD);
+}
+
+.solicitacao-info .mensagem {
+    background: var(--cor-fundo, #f8f9fa);
+    padding: 14px;
+    border-radius: 10px;
+    margin-top: 12px;
+    color: var(--cor-texto, #333);
+    font-style: italic;
+    border-left: 3px solid var(--cor-azul, #32A1CD);
+}
+
+/* Data e Ações */
+.solicitacao-data {
+    color: var(--cor-texto-claro, #6c757d);
+    font-size: 0.8rem;
+}
+
+.solicitacao-acoes {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
