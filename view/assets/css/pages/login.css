@@ -13,6 +13,7 @@ form {
     /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;  */
     border-radius: 5px;
     padding: 30px;
+    transition: .4s;
 }
 
 form h1 {
@@ -114,4 +115,63 @@ main {
     top: calc(50% + 1px);
     cursor: pointer;
     color: gray;
+}
+
+
+/* Para o mobule */
+#container {
+    transition: .4s;
+}
+
+.text-mobile {
+    display: none;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.text-mobile span {
+    color: var(--cor-azul);
+    font-weight: 500;
+}
+
+#mobile-cadastro {
+    display: none;
+}
+
+/* Responsividade */
+@media (max-width: 810px) {
+    #container {
+        width: 350px;
+        overflow: hidden;
+    }
+
+    .flip {
+        display: none;
+    }
+
+    .text-mobile {
+        display: block;
+    }
+
+    #mobile-cadastro:checked ~ #container #form-login,
+    #mobile-cadastro:checked ~ #container #form-cadastro {
+        transform: translateX(-350px);
+    }
+
+    #mobile-cadastro:not(:checked) ~ #container  {
+        height: 380px;
+    }
+
+    #mobile-cadastro:checked ~ #container  {
+        height: 648px;
+    }
+
+    #form-cadastro .input-group {
+        flex-direction: column;
+    }
+    #form-cadastro .input-group .input-box {
+        width: 100%;
+    }
 }
