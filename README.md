@@ -65,4 +65,19 @@ Projeto em PHP e Banco de Dados MySQL.
 - [ ] Importar `carga.sql` (dados de exemplo)
 - [ ] Ajustar `config/database.php` se usar outro usuário/senha
 
+## Diagrama de Entidade e Relacionamento
+- Pode ser encontrado em `config/estrutura/`.
+- Serviu como base para a criação do banco de dados.
+- Possui os padrões de cardinalidade ou `pé de galinha`.
+
+## Fluxograma Front-End
+- Pode ser encontrado em `view/`.
+- Serviu como base para o fluxo funcional do site.
+
+## Levantamento de Requisitos
+- Pode ser encontrado em `tour-connect/`, mesma raiz do README.
+- Toda a documentação que foi usada para a base do site, também sobre o tema abordado no HACKATHON e a equipe que desenvolveu o site.
+- Possui também, o modelo de Diagrama de Entidade e Relacionamento.
+- Possui o Fluxograma Front-End.
+
 # Senac - Hackathon Voucher Desenvolvedor
