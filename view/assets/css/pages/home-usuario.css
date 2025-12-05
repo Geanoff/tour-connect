@@ -12,6 +12,7 @@ body {
     font-family: var(--fonte, 'Poppins', sans-serif);
     background: linear-gradient(135deg, #f0f4f8 0%, #e1e8ed 100%);
     min-height: 100vh;
+    transition: 0.5;
 }
 
 .home-usuario {
@@ -20,9 +21,255 @@ body {
     padding: 30px 20px;
 }
 
+/* ====== MODO ESCURO GLOBAL ====== */
+body.dark {
+    background: #1a1a1a;
+    color: #f0f0f0;
+    transition: 0.25s ease;
+}
+
+/* Botão */
+#changeColor.dark {
+    background-color: #333;
+    color: white;
+}
+
+body.dark .busca-form {
+    background: #262626;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.05);
+}
+
+body.dark .busca-form input {
+    background: #4e4d4d;
+    border: 1px solid #444;
+    color: #ffffff;
+}
+
+body.dark .busca-form select {
+    background: #4e4d4d;
+    border: 1px solid #444;
+    color: #ffffff;
+}
+
+body.dark .busca-form i {
+    color: #ffffff;
+}
+
+body.dark .busca-form .select-regiao option {
+    color: #ffffff;
+}
+
+body.dark .busca-form input::placeholder {
+    color: #999;
+}
+
+body.dark .btn-buscar {
+    background: #ffa81a;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(255, 169, 77, 0.4);
+}
+
+body.dark h2 {
+    color: #fff;
+}
+
+body.dark .h2-body i {
+    color: #ffa81a;
+}
+
+body.dark .resultado-count {
+    color: #fff;
+}
+
+body.dark .paginacao {
+    background: #262626;
+}
+
+/* ===== HEADER DARK MODE ===== */
+
+.usuario-header.dark {
+    background-color: #262626;
+    border-bottom: 1px solid #333;
+    transition: 0.25s ease;
+}
+
+/* Links do menu */
+.usuario-header.dark a {
+    color: #e6e6e6;
+}
+
+.usuario-header.dark h1 {
+    color: #e6e6e6;
+}
+
+.usuario-header.dark p {
+    color: #e6e6e6;
+}
+
+.usuario-header.dark .user-nome {
+    color: #ffa81a;
+}
+
+.usuario-header.dark .btn-sair {
+    background-color: #333333;
+}
+
+.usuario-header.dark .btn-agendamentos {
+    background: #0c60e9;
+}
+
+.usuario-header.dark .btn-agendamentos span {
+    color: #ffffff;
+}
+
+.usuario-header .btn-agendamentos span {
+    color: #ffffff;
+}
+
+.usuario-header .btn-agendamentos i {
+    color: #ffffff;
+}
+
+.usuario-header.dark .btn-agendamentos:hover {
+    box-shadow: 0 5px 15px rgba(50, 81, 205, 0.3);
+}
+
+.usuario-header.dark .btn-ser-guia {
+    background: #ffa81a;
+}
+
+.usuario-header.dark .btn-ser-guia span {
+    color: white;
+}
+
+.usuario-header .btn-ser-guia span {
+    color: white;
+}
+
+.usuario-header .btn-ser-guia i {
+    color: white;
+}
+
+.usuario-header.dark .btn-ser-guia:hover {
+    box-shadow: 0 5px 15px rgba(205, 143, 50, 0.3);
+}
+
+/* Hover dos links */
+.usuario-header.dark a:hover {
+    color: #ffffff;
+}
+
+/* Ícones */
+.usuario-header.dark i {
+    color: #f0f0f0;
+}
+
+/* Caso tenha foto de usuário */
+.usuario-header.dark .usuario-header__foto {
+    filter: brightness(0.8);
+    border-color: #444;
+}
+
+/* Botão de login ou perfil */
+.usuario-header.dark .usuario-header__btn {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #444;
+}
+
+.usuario-header.dark .usuario-header__btn:hover {
+    background-color: #444;
+}
+
+/* Menu dropdown */
+.usuario-header.dark .usuario-header__dropdown {
+    background-color: #222;
+    border: 1px solid #333;
+}
+
+.usuario-header.dark .usuario-header__dropdown a {
+    color: #ddd;
+}
+
+.usuario-header.dark .usuario-header__dropdown a:hover {
+    background-color: #333;
+}
+
+/* ====== CARDS NO MODO ESCURO ====== */
+.passeio-card.dark {
+    background-color: #262626;
+    border: 1px solid #333;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    transition: 0.25s ease;
+}
+
+/* Imagem escurecida */
+.passeio-card.dark .passeio-card__imagem img {
+    filter: brightness(0.75);
+}
+
+/* Localização */
+.passeio-card.dark .passeio-card__localizacao {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #ffdb72;
+}
+
+/* TÍTULO */
+.passeio-card.dark .passeio-card__titulo {
+    color: #fff !important;
+}
+
+/* Descrição */
+.passeio-card.dark .passeio-card__descricao {
+    color: #e5e5e5;
+}
+
+/* Preço */
+.passeio-card.dark .passeio-card__preco {
+    color: #ffa81a;
+}
+
+/* Botão */
+.passeio-card.dark .passeio-card__btn {
+    background-color: #444;
+    color: white;
+    border: 1px solid #555;
+}
+
+.passeio-card.dark .passeio-card__btn:hover {
+    background-color: #555;
+}
+
+/* ====== PAGINAÇÃO ====== */
+.paginacao__btn.dark {
+    background-color: #333;
+    color: #fff;
+    border-color: #444;
+}
+
+.paginacao__btn--ativo.dark {
+    background-color: #555;
+}
+
 /* ========================================
    HEADER DO USUÁRIO
    ======================================== */
+
+.change-site__color {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.change-site__color.dark {
+    background-color: #51CD32;
+}
+
 .usuario-header {
     display: flex;
     justify-content: space-between;

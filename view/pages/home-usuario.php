@@ -61,17 +61,17 @@ $termoBusca = isset($_GET['busca']) ? trim($_GET['busca']) : '';
 $estadoFiltro = isset($_GET['estado']) ? $_GET['estado'] : '';
 
 if (!empty($termoBusca)) {
-    $passeiosFiltrados = array_filter($passeiosFiltrados, function($p) use ($termoBusca) {
-        return stripos($p['titulo'], $termoBusca) !== false || 
-               stripos($p['descricao'], $termoBusca) !== false ||
-               stripos($p['localizacao'], $termoBusca) !== false;
+    $passeiosFiltrados = array_filter($passeiosFiltrados, function ($p) use ($termoBusca) {
+        return stripos($p['titulo'], $termoBusca) !== false ||
+            stripos($p['descricao'], $termoBusca) !== false ||
+            stripos($p['localizacao'], $termoBusca) !== false;
     });
 }
 
 if (!empty($estadoFiltro)) {
-    $passeiosFiltrados = array_filter($passeiosFiltrados, function($p) use ($estadoFiltro) {
+    $passeiosFiltrados = array_filter($passeiosFiltrados, function ($p) use ($estadoFiltro) {
         return stripos($p['localizacao'], $estadoFiltro) !== false ||
-               stripos($p['localizacao'], '- ' . $estadoFiltro) !== false;
+            stripos($p['localizacao'], '- ' . $estadoFiltro) !== false;
     });
 }
 
@@ -84,7 +84,8 @@ $paginaAtual = min($paginaAtual, max(1, $totalPaginas));
 $inicio = ($paginaAtual - 1) * $itensPorPagina;
 $passeiosPaginados = array_slice($passeiosFiltrados, $inicio, $itensPorPagina);
 
-function buildPaginationUrl($pagina) {
+function buildPaginationUrl($pagina)
+{
     $params = $_GET;
     $params['pagina'] = $pagina;
     return '?' . http_build_query($params);
@@ -94,7 +95,7 @@ function buildPaginationUrl($pagina) {
 <main class="home-usuario">
     <section class="usuario-header">
         <div class="usuario-header__bemvindo">
-            <h1>Olá, <span><?= htmlspecialchars($usuario['nome']) ?></span>! 👋</h1>
+            <h1>Olá, <span class="user-nome"><?= htmlspecialchars($usuario['nome']) ?></span>! 👋</h1>
             <p>Encontre o passeio perfeito para sua próxima aventura</p>
         </div>
         <div class="usuario-header__acoes">
@@ -102,17 +103,22 @@ function buildPaginationUrl($pagina) {
                 <i class="fas fa-calendar-alt"></i>
                 <span>Meus Agendamentos</span>
             </a>
-            <?php if($usuario['email'] === 'administrador@example.com'): ?>
+            <?php if ($usuario['email'] === 'administrador@example.com'): ?>
                 <a href="admin/index.php" class="btn-ser-guia">
                     <i class="fas fa-user-tie"></i>
                     <span>Voltar ao menu admin</span>
-                </a>    
+                </a>
             <?php else: ?>
                 <a href="#" onclick="abrirModalGuia()" class="btn-ser-guia">
                     <i class="fas fa-user-tie"></i>
                     <span>Quero ser Guia</span>
                 </a>
             <?php endif ?>
+
+            <div class="change-site__color" id="changeColor">
+                <i class="fa-solid fa-lightbulb"></i>
+            </div>
+
             <a href="../../controller/LogoutController.php" class="btn-sair">
                 <i class="fas fa-sign-out-alt"></i>
             </a>
@@ -123,13 +129,12 @@ function buildPaginationUrl($pagina) {
         <form method="GET" class="busca-form">
             <div class="busca-input-wrapper">
                 <i class="fas fa-search"></i>
-                <input 
-                    type="text" 
-                    name="busca" 
-                    placeholder="Buscar passeios, trilhas, cachoeiras..." 
+                <input
+                    type="text"
+                    name="busca"
+                    placeholder="Buscar passeios, trilhas, cachoeiras..."
                     value="<?= htmlspecialchars($termoBusca) ?>"
-                    class="busca-input"
-                >
+                    class="busca-input">
             </div>
             <div class="filtro-regiao">
                 <i class="fas fa-map-marker-alt"></i>
@@ -148,7 +153,7 @@ function buildPaginationUrl($pagina) {
     </section>
     <section class="passeios-resultado">
         <div class="resultado-header">
-            <h2>
+            <h2 class="h2-body">
                 <?php if (!empty($termoBusca) || !empty($estadoFiltro)): ?>
                     <i class="fas fa-filter"></i> Resultados da busca
                 <?php else: ?>
@@ -168,13 +173,13 @@ function buildPaginationUrl($pagina) {
         <?php else: ?>
             <div class="lista-passeios">
                 <?php foreach ($passeiosPaginados as $passeio): ?>
-                    <?php 
+                    <?php
                     $imgPasseio = $passeio['imagem'] ?? '';
                     if ($imgPasseio && strpos($imgPasseio, 'http') !== 0) {
                         $imgPasseio = '../../' . $imgPasseio;
                     }
                     ?>
-                    <div class="passeio-card">
+                    <div class="passeio-card" id="changeColorDiv">
                         <div class="passeio-card__imagem">
                             <img src="<?= htmlspecialchars($imgPasseio) ?>" alt="<?= htmlspecialchars($passeio['titulo']) ?>">
                             <span class="passeio-card__localizacao">
@@ -217,6 +222,26 @@ function buildPaginationUrl($pagina) {
             <?php endif; ?>
         <?php endif; ?>
     </section>
+    <script>
+        let changeColor = document.getElementById('changeColor');
+        let body = document.querySelector('body');
+        let passeiocard = document.querySelectorAll('.passeio-card');
+        let h3s = document.querySelectorAll('.passeio-card h3');
+        let paginacaoBtns = document.querySelectorAll('.paginacao__btn');
+        let userHeader = document.querySelector('.usuario-header');
+
+        changeColor.addEventListener('click', () => {
+            changeColor.classList.toggle('dark');
+            body.classList.toggle('dark');
+
+            passeiocard.forEach(card => card.classList.toggle('dark'));
+            h3s.forEach(t => t.classList.toggle('dark'));
+            paginacaoBtns.forEach(btn => btn.classList.toggle('dark'));
+
+            if (userHeader) userHeader.classList.toggle('dark');
+        });
+    </script>
+
 </main>
 
 <!-- Modal Solicitação para ser Guia -->
@@ -271,4 +296,3 @@ function buildPaginationUrl($pagina) {
 $jsPagina = 'home-usuario.js';
 require_once '../components/layout/base-fim.php';
 ?>
-
