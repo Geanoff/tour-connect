@@ -30,7 +30,7 @@ if (!empty($destino['imagem']) && strpos($destino['imagem'], 'http') !== 0) {
 
 // Ajusta array de imagens para a galeria
 if (!empty($destino['imagens'])) {
-    $destino['imagens'] = array_map(function($img) {
+    $destino['imagens'] = array_map(function ($img) {
         if (strpos($img, 'http') !== 0) {
             return '../../' . $img;
         }
@@ -45,13 +45,13 @@ if (!empty($destino['imagens'])) {
 $guiasDb = $modelDestino->buscarGuiasDestino($destinoId);
 
 // Formata os guias para o formato esperado
-$guias = array_map(function($guia) {
+$guias = array_map(function ($guia) {
     // Ajusta caminho da imagem
     $imagem = $guia['imagem'] ?? '';
     if ($imagem && strpos($imagem, 'http') !== 0) {
         $imagem = '../../' . $imagem;
     }
-    
+
     return [
         'id' => $guia['id'],
         'nome' => $guia['nome'],
@@ -64,9 +64,19 @@ $horarios = ['06:00', '07:00', '08:00', '14:00', '15:00'];
 ?>
 
 <main class="passeio-page">
+    <header class="bg-white !p-4 !mb-6 rounded-md flex justify-between">
+        <a href="home-usuario.php" class="flex items-center gap-2 bg-slate-100 !p-3 rounded-lg hover:bg-slate-200 font-semibold text-sm">
+            <i class="fa-solid fa-arrow-left"></i>
+            VOLTAR
+        </a>
+        <a href="../../controller/LogoutController.php" class="!p-3 bg-slate-100 hover:bg-red-500 transition rounded-lg">
+            <i class="fas fa-sign-out-alt"></i>
+        </a>
+    </header>
     <section class="galeria">
         <div class="galeria__principal">
-            <img id="imagem-principal" src="<?= htmlspecialchars($destino['imagem']) ?>" alt="<?= htmlspecialchars($destino['titulo']) ?>">
+            <img id="imagem-principal" src="<?= htmlspecialchars($destino['imagem']) ?>"
+                alt="<?= htmlspecialchars($destino['titulo']) ?>">
             <button class="galeria__nav galeria__nav--prev" onclick="mudarImagem(-1)">
                 <i class="fas fa-chevron-left"></i>
             </button>
@@ -76,12 +86,9 @@ $horarios = ['06:00', '07:00', '08:00', '14:00', '15:00'];
         </div>
         <div class="galeria__miniaturas">
             <?php foreach ($destino['imagens'] as $index => $imagem): ?>
-                <img 
-                    src="<?= htmlspecialchars($imagem) ?>" 
-                    alt="Miniatura <?= $index + 1 ?>" 
+                <img src="<?= htmlspecialchars($imagem) ?>" alt="Miniatura <?= $index + 1 ?>"
                     class="galeria__thumb <?= $index === 0 ? 'galeria__thumb--ativa' : '' ?>"
-                    onclick="selecionarImagem(<?= $index ?>)"
-                >
+                    onclick="selecionarImagem(<?= $index ?>)">
             <?php endforeach; ?>
         </div>
     </section>
@@ -155,7 +162,8 @@ $horarios = ['06:00', '07:00', '08:00', '14:00', '15:00'];
                 <h3>Escolha o horário</h3>
                 <div class="horarios-lista">
                     <?php foreach ($horarios as $horario): ?>
-                        <button class="horario-btn" data-horario="<?= $horario ?>" onclick="selecionarHorario('<?= $horario ?>')">
+                        <button class="horario-btn" data-horario="<?= $horario ?>"
+                            onclick="selecionarHorario('<?= $horario ?>')">
                             <?= $horario ?>
                         </button>
                     <?php endforeach; ?>
@@ -176,7 +184,8 @@ $horarios = ['06:00', '07:00', '08:00', '14:00', '15:00'];
             </div>
             <div id="lista-participantes" class="lista-participantes">
                 <div class="participante-item" data-index="0">
-                    <input type="text" value="<?= htmlspecialchars($usuarioNome) ?>" class="input-nome" readonly style="background: #e9ecef;">
+                    <input type="text" value="<?= htmlspecialchars($usuarioNome) ?>" class="input-nome" readonly
+                        style="background: #e9ecef;">
                     <input type="number" placeholder="Sua idade" class="input-idade" min="1" max="120" required>
                 </div>
             </div>
@@ -198,7 +207,8 @@ $horarios = ['06:00', '07:00', '08:00', '14:00', '15:00'];
                 </div>
                 <div class="resumo-item resumo-item--total">
                     <span class="resumo-label">Total:</span>
-                    <span class="resumo-valor resumo-valor--preco">R$ <?= number_format($destino['preco'], 2, ',', '.') ?></span>
+                    <span class="resumo-valor resumo-valor--preco">R$
+                        <?= number_format($destino['preco'], 2, ',', '.') ?></span>
                 </div>
             </div>
             <button class="btn-agendar" onclick="confirmarAgendamento()">
@@ -209,225 +219,224 @@ $horarios = ['06:00', '07:00', '08:00', '14:00', '15:00'];
 </main>
 
 <script>
-// Verifica se o usuário está logado
-const usuarioLogado = <?= $usuarioLogado ? 'true' : 'false' ?>;
+    // Verifica se o usuário está logado
+    const usuarioLogado = <?= $usuarioLogado ? 'true' : 'false' ?>;
 
-// Dados das imagens para a galeria
-const imagens = <?= json_encode($destino['imagens']) ?>;
-let imagemAtual = 0;
+    // Dados das imagens para a galeria
+    const imagens = <?= json_encode($destino['imagens']) ?>;
+    let imagemAtual = 0;
 
-// Dados dos guias
-const guiasData = <?= json_encode($guias) ?>;
+    // Dados dos guias
+    const guiasData = <?= json_encode($guias) ?>;
 
-// Estado do agendamento
-let agendamento = {
-    guiaId: null,
-    guiaNome: null,
-    data: null,
-    horario: null,
-    quantidadePessoas: 1
-};
+    // Estado do agendamento
+    let agendamento = {
+        guiaId: null,
+        guiaNome: null,
+        data: null,
+        horario: null,
+        quantidadePessoas: 1
+    };
 
-// Preço do passeio
-const precoPorPessoa = <?= $destino['preco'] ?>;
+    // Preço do passeio
+    const precoPorPessoa = <?= $destino['preco'] ?>;
 
-// Funções de Quantidade/Participantes
-function alterarQuantidade(delta) {
-    const input = document.getElementById('quantidade-pessoas');
-    let valor = parseInt(input.value) + delta;
-    if (valor < 1) valor = 1; // Mínimo 1 (o próprio usuário)
-    if (valor > 10) valor = 10;
-    input.value = valor;
-    agendamento.quantidadePessoas = valor;
-    atualizarListaParticipantes(valor);
-    atualizarPrecoTotal();
-    verificarVagas();
-}
+    // Funções de Quantidade/Participantes
+    function alterarQuantidade(delta) {
+        const input = document.getElementById('quantidade-pessoas');
+        let valor = parseInt(input.value) + delta;
+        if (valor < 1) valor = 1; // Mínimo 1 (o próprio usuário)
+        if (valor > 10) valor = 10;
+        input.value = valor;
+        agendamento.quantidadePessoas = valor;
+        atualizarListaParticipantes(valor);
+        atualizarPrecoTotal();
+        verificarVagas();
+    }
 
-// Nome do usuário para o primeiro participante
-const nomeUsuario = '<?= addslashes($usuarioNome) ?>';
+    // Nome do usuário para o primeiro participante
+    const nomeUsuario = '<?= addslashes($usuarioNome) ?>';
 
-function atualizarListaParticipantes(quantidade) {
-    const container = document.getElementById('lista-participantes');
-    const atual = container.querySelectorAll('.participante-item').length;
-    
-    if (quantidade > atual) {
-        for (let i = atual; i < quantidade; i++) {
-            const div = document.createElement('div');
-            div.className = 'participante-item';
-            div.dataset.index = i;
-            div.innerHTML = `
+    function atualizarListaParticipantes(quantidade) {
+        const container = document.getElementById('lista-participantes');
+        const atual = container.querySelectorAll('.participante-item').length;
+
+        if (quantidade > atual) {
+            for (let i = atual; i < quantidade; i++) {
+                const div = document.createElement('div');
+                div.className = 'participante-item';
+                div.dataset.index = i;
+                div.innerHTML = `
                 <input type="text" placeholder="Nome do acompanhante ${i}" class="input-nome" required>
                 <input type="number" placeholder="Idade" class="input-idade" min="1" max="120" required>
             `;
-            container.appendChild(div);
-        }
-    } else if (quantidade < atual) {
-        const items = container.querySelectorAll('.participante-item');
-        // Não remove o primeiro (usuário logado)
-        for (let i = atual - 1; i >= quantidade && i > 0; i--) {
-            items[i].remove();
+                container.appendChild(div);
+            }
+        } else if (quantidade < atual) {
+            const items = container.querySelectorAll('.participante-item');
+            // Não remove o primeiro (usuário logado)
+            for (let i = atual - 1; i >= quantidade && i > 0; i--) {
+                items[i].remove();
+            }
         }
     }
-}
 
-function atualizarPrecoTotal() {
-    const total = precoPorPessoa * agendamento.quantidadePessoas;
-    document.querySelector('.resumo-valor--preco').textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
-}
+    function atualizarPrecoTotal() {
+        const total = precoPorPessoa * agendamento.quantidadePessoas;
+        document.querySelector('.resumo-valor--preco').textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
+    }
 
-function getParticipantes() {
-    const participantes = [];
-    document.querySelectorAll('.participante-item').forEach(item => {
-        const nome = item.querySelector('.input-nome').value.trim();
-        const idade = parseInt(item.querySelector('.input-idade').value) || 0;
-        if (nome && idade > 0) {
-            participantes.push({ nome, idade });
-        }
-    });
-    return participantes;
-}
-
-function verificarVagas() {
-    if (!agendamento.data || !agendamento.horario) return;
-    
-    fetch(`../../controller/AgendamentoController.php?acao=verificar_vagas&id_destino=<?= $destinoId ?>&data=${agendamento.data}&horario=${agendamento.horario}`)
-        .then(res => res.json())
-        .then(data => {
-            if (data.sucesso) {
-                const info = document.getElementById('vagas-info');
-                info.style.display = 'block';
-                if (data.vagas.disponiveis <= 0) {
-                    info.innerHTML = '<i class="fas fa-times-circle"></i> Esgotado para este horário';
-                    info.className = 'vagas-info vagas-esgotado';
-                } else {
-                    info.innerHTML = `<i class="fas fa-check-circle"></i> ${data.vagas.disponiveis} vaga(s) disponível(is)`;
-                    info.className = 'vagas-info vagas-disponiveis';
-                }
+    function getParticipantes() {
+        const participantes = [];
+        document.querySelectorAll('.participante-item').forEach(item => {
+            const nome = item.querySelector('.input-nome').value.trim();
+            const idade = parseInt(item.querySelector('.input-idade').value) || 0;
+            if (nome && idade > 0) {
+                participantes.push({ nome, idade });
             }
         });
-}
-
-// Funções da Galeria
-function mudarImagem(direcao) {
-    imagemAtual += direcao;
-    if (imagemAtual < 0) imagemAtual = imagens.length - 1;
-    if (imagemAtual >= imagens.length) imagemAtual = 0;
-    atualizarGaleria();
-}
-
-function selecionarImagem(index) {
-    imagemAtual = index;
-    atualizarGaleria();
-}
-
-function atualizarGaleria() {
-    document.getElementById('imagem-principal').src = imagens[imagemAtual];
-    document.querySelectorAll('.galeria__thumb').forEach((thumb, index) => {
-        thumb.classList.toggle('galeria__thumb--ativa', index === imagemAtual);
-    });
-}
-
-// Funções de Agendamento
-function selecionarGuia(guiaId) {
-    // Converte para número para comparação
-    guiaId = parseInt(guiaId);
-    const guia = guiasData.find(g => parseInt(g.id) === guiaId);
-    
-    if (!guia) {
-        console.error('Guia não encontrado:', guiaId);
-        return;
-    }
-    
-    agendamento.guiaId = guiaId;
-    agendamento.guiaNome = guia.nome;
-
-    document.querySelectorAll('.guia-card').forEach(card => {
-        card.classList.toggle('guia-card--selecionado', parseInt(card.dataset.guiaId) === guiaId);
-    });
-
-    document.getElementById('resumo-guia').textContent = guia.nome;
-}
-
-function selecionarHorario(horario) {
-    agendamento.horario = horario;
-
-    document.querySelectorAll('.horario-btn').forEach(btn => {
-        btn.classList.toggle('horario-btn--selecionado', btn.dataset.horario === horario);
-    });
-
-    document.getElementById('resumo-horario').textContent = horario;
-    verificarVagas();
-}
-
-// Atualizar data no resumo
-document.getElementById('data-passeio').addEventListener('change', function() {
-    agendamento.data = this.value;
-    const dataFormatada = new Date(this.value + 'T00:00:00').toLocaleDateString('pt-BR');
-    document.getElementById('resumo-data').textContent = dataFormatada;
-    verificarVagas();
-});
-
-function confirmarAgendamento() {
-    // Verifica se o usuário está logado
-    if (!usuarioLogado) {
-        alert('Você precisa estar logado para fazer um agendamento.');
-        window.location.href = 'login.php';
-        return;
+        return participantes;
     }
 
-    if (!agendamento.guiaId) {
-        alert('Por favor, selecione um guia.');
-        return;
-    }
-    if (!agendamento.data) {
-        alert('Por favor, selecione uma data.');
-        return;
-    }
-    if (!agendamento.horario) {
-        alert('Por favor, selecione um horário.');
-        return;
+    function verificarVagas() {
+        if (!agendamento.data || !agendamento.horario) return;
+
+        fetch(`../../controller/AgendamentoController.php?acao=verificar_vagas&id_destino=<?= $destinoId ?>&data=${agendamento.data}&horario=${agendamento.horario}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.sucesso) {
+                    const info = document.getElementById('vagas-info');
+                    info.style.display = 'block';
+                    if (data.vagas.disponiveis <= 0) {
+                        info.innerHTML = '<i class="fas fa-times-circle"></i> Esgotado para este horário';
+                        info.className = 'vagas-info vagas-esgotado';
+                    } else {
+                        info.innerHTML = `<i class="fas fa-check-circle"></i> ${data.vagas.disponiveis} vaga(s) disponível(is)`;
+                        info.className = 'vagas-info vagas-disponiveis';
+                    }
+                }
+            });
     }
 
-    // Valida participantes
-    const participantes = getParticipantes();
-    if (participantes.length !== agendamento.quantidadePessoas) {
-        alert('Por favor, preencha o nome e idade de todos os participantes.');
-        return;
+    // Funções da Galeria
+    function mudarImagem(direcao) {
+        imagemAtual += direcao;
+        if (imagemAtual < 0) imagemAtual = imagens.length - 1;
+        if (imagemAtual >= imagens.length) imagemAtual = 0;
+        atualizarGaleria();
     }
 
-    // Envia para o backend
-    const formData = new FormData();
-    formData.append('acao', 'criar');
-    formData.append('id_destino', <?= $destinoId ?>);
-    formData.append('id_guia', agendamento.guiaId);
-    formData.append('data_passeio', agendamento.data);
-    formData.append('horario', agendamento.horario);
-    formData.append('quantidade_pessoas', agendamento.quantidadePessoas);
-    formData.append('participantes', JSON.stringify(participantes));
+    function selecionarImagem(index) {
+        imagemAtual = index;
+        atualizarGaleria();
+    }
 
-    fetch('../../controller/AgendamentoController.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.sucesso) {
-            alert('Agendamento confirmado com sucesso!');
-            window.location.href = 'home-usuario.php';
-        } else {
-            alert('Erro: ' + data.mensagem);
+    function atualizarGaleria() {
+        document.getElementById('imagem-principal').src = imagens[imagemAtual];
+        document.querySelectorAll('.galeria__thumb').forEach((thumb, index) => {
+            thumb.classList.toggle('galeria__thumb--ativa', index === imagemAtual);
+        });
+    }
+
+    // Funções de Agendamento
+    function selecionarGuia(guiaId) {
+        // Converte para número para comparação
+        guiaId = parseInt(guiaId);
+        const guia = guiasData.find(g => parseInt(g.id) === guiaId);
+
+        if (!guia) {
+            console.error('Guia não encontrado:', guiaId);
+            return;
         }
-    })
-    .catch(err => {
-        alert('Erro ao processar agendamento');
-        console.error(err);
+
+        agendamento.guiaId = guiaId;
+        agendamento.guiaNome = guia.nome;
+
+        document.querySelectorAll('.guia-card').forEach(card => {
+            card.classList.toggle('guia-card--selecionado', parseInt(card.dataset.guiaId) === guiaId);
+        });
+
+        document.getElementById('resumo-guia').textContent = guia.nome;
+    }
+
+    function selecionarHorario(horario) {
+        agendamento.horario = horario;
+
+        document.querySelectorAll('.horario-btn').forEach(btn => {
+            btn.classList.toggle('horario-btn--selecionado', btn.dataset.horario === horario);
+        });
+
+        document.getElementById('resumo-horario').textContent = horario;
+        verificarVagas();
+    }
+
+    // Atualizar data no resumo
+    document.getElementById('data-passeio').addEventListener('change', function () {
+        agendamento.data = this.value;
+        const dataFormatada = new Date(this.value + 'T00:00:00').toLocaleDateString('pt-BR');
+        document.getElementById('resumo-data').textContent = dataFormatada;
+        verificarVagas();
     });
-}
+
+    function confirmarAgendamento() {
+        // Verifica se o usuário está logado
+        if (!usuarioLogado) {
+            alert('Você precisa estar logado para fazer um agendamento.');
+            window.location.href = 'login.php';
+            return;
+        }
+
+        if (!agendamento.guiaId) {
+            alert('Por favor, selecione um guia.');
+            return;
+        }
+        if (!agendamento.data) {
+            alert('Por favor, selecione uma data.');
+            return;
+        }
+        if (!agendamento.horario) {
+            alert('Por favor, selecione um horário.');
+            return;
+        }
+
+        // Valida participantes
+        const participantes = getParticipantes();
+        if (participantes.length !== agendamento.quantidadePessoas) {
+            alert('Por favor, preencha o nome e idade de todos os participantes.');
+            return;
+        }
+
+        // Envia para o backend
+        const formData = new FormData();
+        formData.append('acao', 'criar');
+        formData.append('id_destino', <?= $destinoId ?>);
+        formData.append('id_guia', agendamento.guiaId);
+        formData.append('data_passeio', agendamento.data);
+        formData.append('horario', agendamento.horario);
+        formData.append('quantidade_pessoas', agendamento.quantidadePessoas);
+        formData.append('participantes', JSON.stringify(participantes));
+
+        fetch('../../controller/AgendamentoController.php', {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.sucesso) {
+                    alert('Agendamento confirmado com sucesso!');
+                    window.location.href = 'home-usuario.php';
+                } else {
+                    alert('Erro: ' + data.mensagem);
+                }
+            })
+            .catch(err => {
+                alert('Erro ao processar agendamento');
+                console.error(err);
+            });
+    }
 </script>
 
 <?php
 $jsPagina = 'passeio.js';
 require_once '../components/layout/base-fim.php';
 ?>
-
