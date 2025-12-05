@@ -29,6 +29,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['usuario_email'] = $loginUsuario['email'];
             $_SESSION['usuario_telefone'] = $loginUsuario['telefone'];
         }
+
+        if ($dados['email'] == 'administrador@example.com')
+        {
+            header('Location: ../view/pages/admin/index.php');
+            exit;
+        }
         
         // Redireciona para a home do usuário
         header('Location: ../view/pages/home-usuario.php');
