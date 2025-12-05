@@ -23,6 +23,7 @@ $tituloPagina = 'Painel Admin - Tour Connect';
                 <a href="#" data-tab="agendamentos"><i class="fas fa-calendar-alt"></i> Agendamentos</a>
                 <a href="#" data-tab="solicitacoes"><i class="fas fa-user-plus"></i> Solicitações <span id="badge-solicitacoes" class="badge-notif" style="display:none;">0</span></a>
                 <a href="../home-usuario.php"><i class="fas fa-home"></i> Ver Site</a>
+                <a href="../../../controller/LogoutController.php" class="btn-sair"><i class="fas fa-sign-out-alt" style="padding-left: 2px"></i>Sair</a>
             </nav>
         </aside>
 
