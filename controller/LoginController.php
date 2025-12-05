@@ -22,9 +22,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['usuario_email'] = $loginUsuario['email'];
         $_SESSION['usuario_telefone'] = $loginUsuario['telefone'];
         
-        // Redireciona para a home do usuário
+        if ($dados['email'] == 'administrador@example.com')
+        {
+            
+            header('Location: ../view/pages/admin/index.php');
+            exit;
+        }
+
         header('Location: ../view/pages/home-usuario.php');
         exit;
+        // Redireciona para a home do usuário
+        
     } else {
         // Mensagem de erro
         $_SESSION['mensagem_toast'] = ['erro', 'Email ou senha inválidos!'];

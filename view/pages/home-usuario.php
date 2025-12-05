@@ -102,10 +102,17 @@ function buildPaginationUrl($pagina) {
                 <i class="fas fa-calendar-alt"></i>
                 <span>Meus Agendamentos</span>
             </a>
-            <a href="#" onclick="abrirModalGuia()" class="btn-ser-guia">
-                <i class="fas fa-user-tie"></i>
-                <span>Quero ser Guia</span>
-            </a>
+            <?php if($usuario['email'] === 'administrador@example.com'): ?>
+                <a href="admin/index.php" class="btn-ser-guia">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Voltar ao menu admin</span>
+                </a>    
+            <?php else: ?>
+                <a href="#" onclick="abrirModalGuia()" class="btn-ser-guia">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Quero ser Guia</span>
+                </a>
+            <?php endif ?>
             <a href="../../controller/LogoutController.php" class="btn-sair">
                 <i class="fas fa-sign-out-alt"></i>
             </a>
